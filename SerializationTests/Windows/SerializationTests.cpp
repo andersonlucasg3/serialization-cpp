@@ -1,7 +1,6 @@
 #if !defined(__APPLE__)
 #include "CppUnitTest.h"
 
-#include "Serializable.h"
 #include "Implementations/TestsImplementations.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -14,7 +13,12 @@ namespace SerializationTests
 		
 		TEST_METHOD(TestSerializable)
 		{
-            TestsImplementations::SerializationTests();
+            TestsImplementations::TestSerializable();
+		}
+
+		TEST_METHOD(TestSerializableOrder)
+		{
+			TestsImplementations::TestSerializableOrder();
 		}
 	};
 }
