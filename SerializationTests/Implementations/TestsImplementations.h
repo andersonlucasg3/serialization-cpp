@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Serialization/Serializable.h"
+#include "Serializable.h"
 
 struct Model : public Serializable
 {
