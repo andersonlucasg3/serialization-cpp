@@ -16,6 +16,7 @@ void Assert::AreEqual(TType value1, TType value2)
     XCTAssertEqual(value1, value2);
 }
 
-INSTANTIATE_ALL(void, int)
-INSTANTIATE_ALL(void, float)
-INSTANTIATE_ALL(void, const char*)
+#define INSTANTIATE_ALL(type) \
+template void Assert::AreEqual(type, type);
+
+#include "TemplateInstantiation.hpp"

@@ -35,3 +35,6 @@ x64
 .DS_Store
 *.xcuserdatad
 .idea/
+build/
+cmake-build-*
+.vscode/

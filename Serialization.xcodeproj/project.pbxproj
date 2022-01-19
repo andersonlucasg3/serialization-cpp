@@ -13,6 +13,11 @@
 		71068E9827977CAD009289C3 /* TestsImplementations.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 71068E9627977CAD009289C3 /* TestsImplementations.cpp */; };
 		71068EA027978477009289C3 /* Assert.mm in Sources */ = {isa = PBXBuildFile; fileRef = 71068E9E27978477009289C3 /* Assert.mm */; };
 		71068EA227978B3E009289C3 /* Serializable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 71068EA127978B3E009289C3 /* Serializable.cpp */; };
+		713145732797CE2F00A786BB /* FieldData.h in Headers */ = {isa = PBXBuildFile; fileRef = 713145712797CE2F00A786BB /* FieldData.h */; };
+		713145742797CE2F00A786BB /* FieldData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 713145722797CE2F00A786BB /* FieldData.cpp */; };
+		713145762797CE6600A786BB /* TemplateInstantiation.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 713145752797CE6600A786BB /* TemplateInstantiation.hpp */; };
+		713145792797D74600A786BB /* SerializableField.h in Headers */ = {isa = PBXBuildFile; fileRef = 713145772797D74600A786BB /* SerializableField.h */; };
+		7131457A2797D74600A786BB /* SerializableField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 713145782797D74600A786BB /* SerializableField.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +41,11 @@
 		71068E9E27978477009289C3 /* Assert.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Assert.mm; sourceTree = "<group>"; };
 		71068E9F27978477009289C3 /* Assert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Assert.h; sourceTree = "<group>"; };
 		71068EA127978B3E009289C3 /* Serializable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Serializable.cpp; sourceTree = "<group>"; };
+		713145712797CE2F00A786BB /* FieldData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FieldData.h; sourceTree = "<group>"; };
+		713145722797CE2F00A786BB /* FieldData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FieldData.cpp; sourceTree = "<group>"; };
+		713145752797CE6600A786BB /* TemplateInstantiation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TemplateInstantiation.hpp; sourceTree = "<group>"; };
+		713145772797D74600A786BB /* SerializableField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SerializableField.h; sourceTree = "<group>"; };
+		713145782797D74600A786BB /* SerializableField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SerializableField.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,8 +89,13 @@
 		71068E7B27977837009289C3 /* Serialization */ = {
 			isa = PBXGroup;
 			children = (
+				713145782797D74600A786BB /* SerializableField.cpp */,
+				713145772797D74600A786BB /* SerializableField.h */,
+				713145722797CE2F00A786BB /* FieldData.cpp */,
+				713145712797CE2F00A786BB /* FieldData.h */,
 				71068E91279778D8009289C3 /* Serializable.h */,
 				71068EA127978B3E009289C3 /* Serializable.cpp */,
+				713145752797CE6600A786BB /* TemplateInstantiation.hpp */,
 			);
 			path = Serialization;
 			sourceTree = "<group>";
@@ -144,7 +159,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				713145792797D74600A786BB /* SerializableField.h in Headers */,
 				71068E92279778D8009289C3 /* Serializable.h in Headers */,
+				713145732797CE2F00A786BB /* FieldData.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,7 +262,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				713145742797CE2F00A786BB /* FieldData.cpp in Sources */,
+				7131457A2797D74600A786BB /* SerializableField.cpp in Sources */,
 				71068EA227978B3E009289C3 /* Serializable.cpp in Sources */,
+				713145762797CE6600A786BB /* TemplateInstantiation.hpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
