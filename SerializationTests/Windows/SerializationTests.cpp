@@ -1,8 +1,8 @@
 #if !defined(__APPLE__)
 #include "CppUnitTest.h"
 
-#include "Serializable.hpp"
-#include "TestsImplementations/TestsImplementations.h"
+#include "Serializable.h"
+#include "Implementations/TestsImplementations.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

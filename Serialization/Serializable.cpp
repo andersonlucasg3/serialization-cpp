@@ -5,7 +5,7 @@
 template<typename TType>
 FieldData<TType>& BaseFieldData::As()
 {
-    return *(FieldData<TType>*)this;
+    return *reinterpret_cast<FieldData<TType>*>(this);
 }
 
 template<typename TType>

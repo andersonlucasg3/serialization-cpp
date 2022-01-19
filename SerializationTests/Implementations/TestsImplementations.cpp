@@ -1,5 +1,5 @@
 #include "TestsImplementations.h"
-#include "TestFrameworkProxy/Assert.h"
+#include "TestFramework/Assert.h"
 
 void TestsImplementations::TestSerializable()
 {

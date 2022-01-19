@@ -19,7 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Serializable.hpp" />
+    <ClInclude Include="Serializable.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Serializable.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

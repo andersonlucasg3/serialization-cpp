@@ -88,9 +88,9 @@
 		71068E8527977838009289C3 /* SerializationTests */ = {
 			isa = PBXGroup;
 			children = (
-				71068E9D27978459009289C3 /* TestFrameworkProxy */,
+				71E31A5E2797BBB0003DDF1B /* macOS */,
+				71068E9D27978459009289C3 /* TestFramework */,
 				71068E9527977979009289C3 /* Implementations */,
-				71068E8627977838009289C3 /* SerializationTests.mm */,
 			);
 			path = SerializationTests;
 			sourceTree = "<group>";
@@ -112,13 +112,29 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		71068E9D27978459009289C3 /* TestFrameworkProxy */ = {
+		71068E9D27978459009289C3 /* TestFramework */ = {
 			isa = PBXGroup;
 			children = (
+				71E31A5F2797BBC5003DDF1B /* macOS */,
 				71068E9F27978477009289C3 /* Assert.h */,
+			);
+			path = TestFramework;
+			sourceTree = "<group>";
+		};
+		71E31A5E2797BBB0003DDF1B /* macOS */ = {
+			isa = PBXGroup;
+			children = (
+				71068E8627977838009289C3 /* SerializationTests.mm */,
+			);
+			path = macOS;
+			sourceTree = "<group>";
+		};
+		71E31A5F2797BBC5003DDF1B /* macOS */ = {
+			isa = PBXGroup;
+			children = (
 				71068E9E27978477009289C3 /* Assert.mm */,
 			);
-			path = TestFrameworkProxy;
+			path = macOS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
