@@ -1,5 +1,5 @@
 #include "TestsImplementations.h"
-#include "TestFramework/Assert.h"
+#include <TestFramework/Assert.h>
 
 void TestsImplementations::TestSerializable()
 {
