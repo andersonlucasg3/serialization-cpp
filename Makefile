@@ -27,3 +27,9 @@ build-mac: cmake-xcode-gen
 test-mac: cmake-xcode-gen
 	xcodebuild -project ${XCODE_PROJECT} -scheme ${TEST_SCHEME} test
 	make cmake-clion-gen
+
+xcode-open: cmake-xcode-gen
+	open ./*.xcodeproj
+
+vs-open: cmake-vs-gen
+	start *.sln

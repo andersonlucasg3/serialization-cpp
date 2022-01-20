@@ -17,7 +17,7 @@ target_include_directories(Serialization
         PUBLIC
         Serialization/Source/Public/)
 
-if (!WIN32)
+if (APPLE)
 
 set_target_properties(Serialization PROPERTIES
         FRAMEWORK TRUE
@@ -26,7 +26,7 @@ set_target_properties(Serialization PROPERTIES
         FRAMEWORK_VERSION "A"
         PUBLIC_HEADER Serialization/Source/Public/Serializable.h)
 
-endif(!WIN32)
+endif(APPLE)
 
 enable_testing()
 
@@ -37,7 +37,7 @@ set(TEST_SOURCES_CPP
         SerializationTests/Source/Public/Assert.h
         SerializationTests/Source/Public/TestsImplementations.h)
 
-if (!WIN32)
+if (APPLE)
 
     # XCTest for Framework
 
@@ -45,18 +45,17 @@ if (!WIN32)
 
     xctest_add_bundle(SerializationTests Serialization)
 
-    target_sources(SerializationTests
-            PRIVATE
-            "${TEST_SOURCES}"
-            SerializationTests/Source/Private/Assert.mm
-            SerializationTests/Source/Private/SerializationTests.mm)
+    list(APPEND TEST_SOURCES_CPP 
+        SerializationTests/Source/Private/Assert.mm
+        SerializationTests/Source/Private/SerializationTests.mm)
+
+    target_sources(SerializationTests PRIVATE "${TEST_SOURCES_CPP}")
 
     include_directories(SerializationTests/Source/Public/)
 
 else()
 
-    add_library(SerializationTests SHARED
-            "${TEST_SOURCES_CPP}")
+    add_library(SerializationTests SHARED "${TEST_SOURCES_CPP}")
     set_target_properties(SerializationTests PROPERTIES
             DLL TRUE)
     add_test(SerializationTests COMMAND SerializationTests)
@@ -64,4 +63,4 @@ else()
 
     include_directories(SerializationTests/Source/Public/)
 
-endif(!WIN32)
+endif(APPLE)
