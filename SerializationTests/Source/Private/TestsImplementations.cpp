@@ -38,8 +38,33 @@ void TestsImplementations::TestSerializableOrder()
 void TestsImplementations::TestSerializeStruct()
 {
     Model m = Model();
+    m.a = 0;
+    m.b = 1;
+    m.c = 3.14;
     
     uint8_t* serializedData = m.Serialize();
-    
-    // TODO(anderson): check the data;
+
+    int value = 0;
+    float fvalue = 3.14;
+    size_t position = 0;
+
+    uint8_t* compare = new uint8_t[m.GetTotalSizeInBytes()];
+
+    memcpy(compare, &value, sizeof(int));
+    position += sizeof(int);
+
+    value = 1;
+
+    memcpy(compare + position, &value, sizeof(int));
+    position += sizeof(int);
+
+    memcpy(compare + position, &fvalue, sizeof(float));
+    position += sizeof(float);
+
+    Assert::AreEqual(position, m.GetTotalSizeInBytes());
+
+    for (int index = 0; index < m.GetTotalSizeInBytes(); ++index)
+    {
+        Assert::AreEqual(*(compare + index), *(serializedData + index));
+    }
 }

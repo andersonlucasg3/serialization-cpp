@@ -12,7 +12,7 @@ struct Serializable
 {
 private:
 	list<BaseFieldData*> _fields;
-    int _dataSizeInBytes;
+    size_t _dataSizeInBytes;
     
     template<typename TType>
     void AddField(FieldData<TType>* fieldData);
@@ -21,9 +21,10 @@ public:
 	Serializable();
     ~Serializable();
     
-    uint8_t* Serialize() const;
+    [[nodiscard]] uint8_t* Serialize() const;
     
-    const list<BaseFieldData*>& GetFields() const;
+    [[nodiscard]] const list<BaseFieldData*>& GetFields() const;
+    [[nodiscard]] size_t GetTotalSizeInBytes() const;
 
 	template<typename TType>
 	friend struct SerializableField;

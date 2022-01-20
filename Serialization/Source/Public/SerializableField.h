@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Serializable.h"
+
 struct Serializable;
 
 template<typename TType>

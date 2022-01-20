@@ -5,7 +5,7 @@ void Serializable::AddField(FieldData<TType>* fieldData)
 {
     _dataSizeInBytes += sizeof(TType);
     
-    auto endIndex = end(_fields);
+    list<BaseFieldData*>::iterator endIndex = end(_fields);
     
     _fields.insert(endIndex, fieldData);
 }
@@ -13,6 +13,7 @@ void Serializable::AddField(FieldData<TType>* fieldData)
 Serializable::Serializable()
 {
     _fields = list<BaseFieldData*>();
+    _dataSizeInBytes = 0;
 }
 
 Serializable::~Serializable()
@@ -27,13 +28,23 @@ Serializable::~Serializable()
 
 uint8_t *Serializable::Serialize() const
 {
-    // TODO(anderson): implement
-    return nullptr;
+    uint8_t* buffer = new uint8_t[_dataSizeInBytes];
+    size_t position = 0;
+    for (BaseFieldData* element : _fields)
+    {
+        position = element->PutData(buffer, position);
+    }
+    return buffer;
 }
 
 const list<BaseFieldData*>& Serializable::GetFields() const
 {
     return _fields;
+}
+
+size_t Serializable::GetTotalSizeInBytes() const
+{
+    return _dataSizeInBytes;
 }
 
 #define INSTANTIATE_ALL(type) \
