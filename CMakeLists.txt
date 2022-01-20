@@ -49,9 +49,12 @@ if (!WIN32)
 
 else()
 
-    add_executable(SerializationTests "${TEST_SOURCES_CPP}")
+    add_library(SerializationTests SHARED
+            "${TEST_SOURCES_CPP}")
+    set_target_properties(SerializationTests PROPERTIES
+            DLL TRUE)
+    add_test(SerializationTests COMMAND SerializationTests)
     target_link_libraries(SerializationTests Serialization)
-    add_test(NAME SerializationTests COMMAND SerializationTests)
 
     include_directories(SerializationTests/Source/Public/)
 

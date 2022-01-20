@@ -12,15 +12,8 @@ namespace SerializationTests
 	{
 	public:
 		
-		TEST_METHOD(TestSerializable)
-		{
-            TestsImplementations::TestSerializable();
-		}
+		DECLARE_ALL_TESTS()
 
-		TEST_METHOD(TestSerializableOrder)
-		{
-			TestsImplementations::TestSerializableOrder();
-		}
 	};
 }
 
