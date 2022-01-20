@@ -24,7 +24,7 @@ private:
 
 public:
     FieldData(TType* ptr, const char* name);
-    [[nodiscard]] const char* GetName() const;
+    const char* GetName() const;
     TType GetValue() const;
     void SetValue(TType newValue) const;
 };

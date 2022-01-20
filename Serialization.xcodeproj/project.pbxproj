@@ -8,16 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		71068E8227977838009289C3 /* Serialization.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71068E7927977837009289C3 /* Serialization.framework */; };
-		71068E8727977838009289C3 /* SerializationTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 71068E8627977838009289C3 /* SerializationTests.mm */; };
-		71068E92279778D8009289C3 /* Serializable.h in Headers */ = {isa = PBXBuildFile; fileRef = 71068E91279778D8009289C3 /* Serializable.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		71068E9827977CAD009289C3 /* TestsImplementations.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 71068E9627977CAD009289C3 /* TestsImplementations.cpp */; };
-		71068EA027978477009289C3 /* Assert.mm in Sources */ = {isa = PBXBuildFile; fileRef = 71068E9E27978477009289C3 /* Assert.mm */; };
-		71068EA227978B3E009289C3 /* Serializable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 71068EA127978B3E009289C3 /* Serializable.cpp */; };
-		713145732797CE2F00A786BB /* FieldData.h in Headers */ = {isa = PBXBuildFile; fileRef = 713145712797CE2F00A786BB /* FieldData.h */; };
-		713145742797CE2F00A786BB /* FieldData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 713145722797CE2F00A786BB /* FieldData.cpp */; };
-		713145762797CE6600A786BB /* TemplateInstantiation.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 713145752797CE6600A786BB /* TemplateInstantiation.hpp */; };
-		713145792797D74600A786BB /* SerializableField.h in Headers */ = {isa = PBXBuildFile; fileRef = 713145772797D74600A786BB /* SerializableField.h */; };
-		7131457A2797D74600A786BB /* SerializableField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 713145782797D74600A786BB /* SerializableField.cpp */; };
+		717D7E582798F0B6008E1F0B /* Serialization.vcxproj.user in Resources */ = {isa = PBXBuildFile; fileRef = 717D7E4E2798F0B6008E1F0B /* Serialization.vcxproj.user */; };
+		717D7E5B2798F0B6008E1F0B /* Serialization.vcxproj in Resources */ = {isa = PBXBuildFile; fileRef = 717D7E512798F0B6008E1F0B /* Serialization.vcxproj */; };
+		717D7E5D2798F0B6008E1F0B /* Serialization.vcxproj.filters in Resources */ = {isa = PBXBuildFile; fileRef = 717D7E532798F0B6008E1F0B /* Serialization.vcxproj.filters */; };
+		717D7E932798F274008E1F0B /* Private in Resources */ = {isa = PBXBuildFile; fileRef = 717D7E912798F274008E1F0B /* Private */; };
+		717D7E942798F274008E1F0B /* Public in Resources */ = {isa = PBXBuildFile; fileRef = 717D7E922798F274008E1F0B /* Public */; };
+		717D7E952798F276008E1F0B /* Private in Sources */ = {isa = PBXBuildFile; fileRef = 717D7E912798F274008E1F0B /* Private */; };
+		717D7E962798F279008E1F0B /* Public in Headers */ = {isa = PBXBuildFile; fileRef = 717D7E922798F274008E1F0B /* Public */; settings = {ATTRIBUTES = (Public, ); }; };
+		717D7EB02798F2ED008E1F0B /* Private in Sources */ = {isa = PBXBuildFile; fileRef = 717D7EAD2798F2B5008E1F0B /* Private */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,19 +31,14 @@
 /* Begin PBXFileReference section */
 		71068E7927977837009289C3 /* Serialization.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Serialization.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		71068E8127977838009289C3 /* SerializationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SerializationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		71068E8627977838009289C3 /* SerializationTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = SerializationTests.mm; sourceTree = "<group>"; };
-		71068E91279778D8009289C3 /* Serializable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Serializable.h; sourceTree = "<group>"; };
-		71068E9627977CAD009289C3 /* TestsImplementations.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TestsImplementations.cpp; sourceTree = "<group>"; };
-		71068E9727977CAD009289C3 /* TestsImplementations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestsImplementations.h; sourceTree = "<group>"; };
 		71068E9A279780C1009289C3 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
-		71068E9E27978477009289C3 /* Assert.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Assert.mm; sourceTree = "<group>"; };
-		71068E9F27978477009289C3 /* Assert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Assert.h; sourceTree = "<group>"; };
-		71068EA127978B3E009289C3 /* Serializable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Serializable.cpp; sourceTree = "<group>"; };
-		713145712797CE2F00A786BB /* FieldData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FieldData.h; sourceTree = "<group>"; };
-		713145722797CE2F00A786BB /* FieldData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FieldData.cpp; sourceTree = "<group>"; };
-		713145752797CE6600A786BB /* TemplateInstantiation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TemplateInstantiation.hpp; sourceTree = "<group>"; };
-		713145772797D74600A786BB /* SerializableField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SerializableField.h; sourceTree = "<group>"; };
-		713145782797D74600A786BB /* SerializableField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SerializableField.cpp; sourceTree = "<group>"; };
+		717D7E4E2798F0B6008E1F0B /* Serialization.vcxproj.user */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Serialization.vcxproj.user; sourceTree = "<group>"; };
+		717D7E512798F0B6008E1F0B /* Serialization.vcxproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Serialization.vcxproj; sourceTree = "<group>"; };
+		717D7E532798F0B6008E1F0B /* Serialization.vcxproj.filters */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Serialization.vcxproj.filters; sourceTree = "<group>"; };
+		717D7E912798F274008E1F0B /* Private */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Private; sourceTree = "<group>"; };
+		717D7E922798F274008E1F0B /* Public */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Public; sourceTree = "<group>"; };
+		717D7EAC2798F2B5008E1F0B /* Public */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Public; sourceTree = "<group>"; };
+		717D7EAD2798F2B5008E1F0B /* Private */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Private; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,7 +63,7 @@
 		71068E6F27977837009289C3 = {
 			isa = PBXGroup;
 			children = (
-				71068E7B27977837009289C3 /* Serialization */,
+				717D7E4D2798F0B6008E1F0B /* Serialization */,
 				71068E8527977838009289C3 /* SerializationTests */,
 				71068E7A27977837009289C3 /* Products */,
 				71068E99279780C1009289C3 /* Frameworks */,
@@ -86,37 +79,12 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		71068E7B27977837009289C3 /* Serialization */ = {
-			isa = PBXGroup;
-			children = (
-				713145782797D74600A786BB /* SerializableField.cpp */,
-				713145772797D74600A786BB /* SerializableField.h */,
-				713145722797CE2F00A786BB /* FieldData.cpp */,
-				713145712797CE2F00A786BB /* FieldData.h */,
-				71068E91279778D8009289C3 /* Serializable.h */,
-				71068EA127978B3E009289C3 /* Serializable.cpp */,
-				713145752797CE6600A786BB /* TemplateInstantiation.hpp */,
-			);
-			path = Serialization;
-			sourceTree = "<group>";
-		};
 		71068E8527977838009289C3 /* SerializationTests */ = {
 			isa = PBXGroup;
 			children = (
-				71E31A5E2797BBB0003DDF1B /* macOS */,
-				71068E9D27978459009289C3 /* TestFramework */,
-				71068E9527977979009289C3 /* Implementations */,
+				717D7E972798F29B008E1F0B /* Source */,
 			);
 			path = SerializationTests;
-			sourceTree = "<group>";
-		};
-		71068E9527977979009289C3 /* Implementations */ = {
-			isa = PBXGroup;
-			children = (
-				71068E9727977CAD009289C3 /* TestsImplementations.h */,
-				71068E9627977CAD009289C3 /* TestsImplementations.cpp */,
-			);
-			path = Implementations;
 			sourceTree = "<group>";
 		};
 		71068E99279780C1009289C3 /* Frameworks */ = {
@@ -127,29 +95,33 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		71068E9D27978459009289C3 /* TestFramework */ = {
+		717D7E4D2798F0B6008E1F0B /* Serialization */ = {
 			isa = PBXGroup;
 			children = (
-				71E31A5F2797BBC5003DDF1B /* macOS */,
-				71068E9F27978477009289C3 /* Assert.h */,
+				717D7E802798F267008E1F0B /* Source */,
+				717D7E4E2798F0B6008E1F0B /* Serialization.vcxproj.user */,
+				717D7E512798F0B6008E1F0B /* Serialization.vcxproj */,
+				717D7E532798F0B6008E1F0B /* Serialization.vcxproj.filters */,
 			);
-			path = TestFramework;
+			path = Serialization;
 			sourceTree = "<group>";
 		};
-		71E31A5E2797BBB0003DDF1B /* macOS */ = {
+		717D7E802798F267008E1F0B /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				71068E8627977838009289C3 /* SerializationTests.mm */,
+				717D7E912798F274008E1F0B /* Private */,
+				717D7E922798F274008E1F0B /* Public */,
 			);
-			path = macOS;
+			path = Source;
 			sourceTree = "<group>";
 		};
-		71E31A5F2797BBC5003DDF1B /* macOS */ = {
+		717D7E972798F29B008E1F0B /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				71068E9E27978477009289C3 /* Assert.mm */,
+				717D7EAD2798F2B5008E1F0B /* Private */,
+				717D7EAC2798F2B5008E1F0B /* Public */,
 			);
-			path = macOS;
+			path = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -159,9 +131,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				713145792797D74600A786BB /* SerializableField.h in Headers */,
-				71068E92279778D8009289C3 /* Serializable.h in Headers */,
-				713145732797CE2F00A786BB /* FieldData.h in Headers */,
+				717D7E962798F279008E1F0B /* Public in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,6 +215,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				717D7E942798F274008E1F0B /* Public in Resources */,
+				717D7E5D2798F0B6008E1F0B /* Serialization.vcxproj.filters in Resources */,
+				717D7E582798F0B6008E1F0B /* Serialization.vcxproj.user in Resources */,
+				717D7E932798F274008E1F0B /* Private in Resources */,
+				717D7E5B2798F0B6008E1F0B /* Serialization.vcxproj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,10 +237,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				713145742797CE2F00A786BB /* FieldData.cpp in Sources */,
-				7131457A2797D74600A786BB /* SerializableField.cpp in Sources */,
-				71068EA227978B3E009289C3 /* Serializable.cpp in Sources */,
-				713145762797CE6600A786BB /* TemplateInstantiation.hpp in Sources */,
+				717D7E952798F276008E1F0B /* Private in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,9 +245,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				71068E9827977CAD009289C3 /* TestsImplementations.cpp in Sources */,
-				71068EA027978477009289C3 /* Assert.mm in Sources */,
-				71068E8727977838009289C3 /* SerializationTests.mm in Sources */,
+				717D7EB02798F2ED008E1F0B /* Private in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

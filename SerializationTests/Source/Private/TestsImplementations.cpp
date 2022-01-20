@@ -26,8 +26,8 @@ void TestsImplementations::TestSerializable()
 void TestsImplementations::TestSerializableOrder()
 {
     Model m = Model();
-    const auto& fields = m.GetFields();
-    auto iterator = fields.begin();
+    const list<BaseFieldData*>& fields = m.GetFields();
+    list<BaseFieldData*>::const_iterator iterator = fields.begin();
     Assert::AreEqual("a", (*iterator)->As<int>().GetName());
     advance(iterator, 1);
     Assert::AreEqual("b", (*iterator)->As<int>().GetName());

@@ -1,3 +1,5 @@
+#if !defined(__APPLE__)
+
 #include "TestFramework/Assert.h"
 
 #include "CppUnitTest.h"
@@ -12,3 +14,5 @@ void Assert::AreEqual(TType value1, TType value2)
 template void Assert::AreEqual(type, type);
 
 #include "TemplateInstantiation.hpp"
+
+#endif

@@ -4,11 +4,8 @@
 
 #import "Implementations/TestsImplementations.h"
 
-#define DECLARE_TEST(className, testName) \
-- (void) testName \
-{ \
-    className :: testName (); \
-}
+#define DECLARE_TEST(className, funcName) \
+- (void) test##funcName { className::funcName (); }
 
 @interface SerializationTests : XCTestCase
 
