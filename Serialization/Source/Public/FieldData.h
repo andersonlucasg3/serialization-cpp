@@ -16,8 +16,8 @@ public:
     template<typename TType>
     FieldData<TType>& As();
 
-    virtual size_t& PutData(uint8_t* into, size_t& currentSize) const { };
-    virtual size_t& PeekData(uint8_t* from, size_t& currentSize) { };
+    virtual size_t& PutData(uint8_t* into, size_t& currentSize) const = 0;
+    virtual size_t& PeekData(uint8_t* from, size_t& currentSize) = 0;
 };
 
 template<typename TType>

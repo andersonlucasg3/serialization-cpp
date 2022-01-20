@@ -1,6 +1,8 @@
 #include "FieldDataTests.h"
 #include "FieldData.h"
 
+#include "Assert.h"
+
 void ImplFieldDataTests::TestFieldData()
 {
     int value;

@@ -61,7 +61,7 @@ Serializable& Serializable::operator=(const Serializable &other)
 {
     list<BaseFieldData*>::const_iterator iteratorThis = _fields.begin();
     list<BaseFieldData*>::const_iterator iteratorOther = other._fields.begin();
-    for (int index; index < _fields.size(); ++index)
+    for (int index = 0; index < _fields.size(); ++index)
     {
         advance(iteratorThis, index);
         advance(iteratorOther, index);

@@ -1,9 +1,5 @@
-#if !defined(__APPLE__)
-
-#include "TestsImplementations.h"
+#include "TestsDeclaration.h"
 
 #include "CppUnitTest.h"
 
-DECLARE_TEST_CLASS()
-
-#endif
+DECLARE_ALL_TEST_CLASSES()
