@@ -7,7 +7,11 @@ set(CMAKE_CXX_STANDARD 17)
 add_library(Serialization
         Serialization/Source/Private/FieldData.cpp
         Serialization/Source/Private/Serializable.cpp
-        Serialization/Source/Private/SerializableField.cpp)
+        Serialization/Source/Private/SerializableField.cpp
+        Serialization/Source/Public/FieldData.h
+        Serialization/Source/Public/Serializable.h
+        Serialization/Source/Public/SerializableField.h
+        Serialization/Source/Public/TemplateInstantiation.hpp)
 
 target_include_directories(Serialization
         PUBLIC
@@ -29,7 +33,9 @@ enable_testing()
 set(TEST_SOURCES_CPP
         SerializationTests/Source/Private/Assert.cpp
         SerializationTests/Source/Private/SerializationTests.cpp
-        SerializationTests/Source/Private/TestsImplementations.cpp)
+        SerializationTests/Source/Private/TestsImplementations.cpp
+        SerializationTests/Source/Public/Assert.h
+        SerializationTests/Source/Public/TestsImplementations.h)
 
 if (!WIN32)
 

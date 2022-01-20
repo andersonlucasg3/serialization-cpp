@@ -4,8 +4,6 @@
 
 #include "TestsImplementations.h"
 
-using namespace Microsoft::VisualStudio::CppUnitTestFramework;
-
 namespace SerializationTests
 {
 	TEST_CLASS(SerializationTests)
