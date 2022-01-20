@@ -38,3 +38,14 @@ x64
 build/
 cmake-build-*
 .vscode/
+*.cmake
+*.xcodeproj/
+cmake-build-*/
+CMakeScripts/
+CMakeFiles/
+CMakeCache.txt
+*.build
+Debug/
+*.framework
+*.xctest
+*.ninja

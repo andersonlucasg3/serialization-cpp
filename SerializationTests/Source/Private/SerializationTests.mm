@@ -2,7 +2,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "Implementations/TestsImplementations.h"
+#import "TestsImplementations.h"
 
 #define DECLARE_TEST(className, funcName) \
 - (void) test##funcName { className::funcName (); }
