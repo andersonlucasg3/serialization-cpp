@@ -5,9 +5,8 @@
 template<typename TType>
 SerializableField<TType>::SerializableField(Serializable* const serializable, const char* name)
 {
-    FieldData<TType>* typeInfo = new FieldData<TType>(&_value, name);
-    list<BaseFieldData*>& members = serializable->_reflectedMembers;
-    members.insert(end(members), typeInfo);
+    FieldData<TType>* fieldData = new FieldData<TType>(&_value, name);
+    serializable->AddField(fieldData);
 }
 
 template<typename TType>

@@ -10,18 +10,20 @@ using namespace std;
 
 struct Serializable
 {
-#ifdef _TESTS
-public:
-#else
 private:
-#endif
-	std::list<BaseFieldData*> _reflectedMembers;
+	list<BaseFieldData*> _fields;
+    int _dataSizeInBytes;
+    
+    template<typename TType>
+    void AddField(FieldData<TType>* fieldData);
 
 public:
 	Serializable();
     ~Serializable();
     
     uint8_t* Serialize() const;
+    
+    const list<BaseFieldData*>& GetFields() const;
 
 	template<typename TType>
 	friend struct SerializableField;

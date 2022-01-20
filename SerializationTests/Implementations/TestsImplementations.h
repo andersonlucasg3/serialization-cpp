@@ -13,6 +13,8 @@ public:
 class TestsImplementations
 {
 public:
+    static void TestFieldData();
     static void TestSerializable();
     static void TestSerializableOrder();
+    static void TestSerializeStruct();
 };
