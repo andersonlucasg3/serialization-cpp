@@ -1,11 +1,12 @@
 XCODE_PROJECT=serialization-cpp.xcodeproj
+VS_SOLUTION=serialization-cpp.sln
 SCHEME=Serialization
 TEST_SCHEME=SerializationTests
 
 ifeq ($(OS),Windows_NT)
-	RM_CMAKE_CACHE = del CMakeCache.txt
+	RM_CMAKE_CACHE=del CMakeCache.txt
 else
-	RM_CMAKE_CACHE = rm CMakeCache.txt ||:
+	RM_CMAKE_CACHE=rm CMakeCache.txt ||:
 endif
 
 cmake-clean:
@@ -32,4 +33,4 @@ xcode-open: cmake-xcode-gen
 	open ./*.xcodeproj
 
 vs-open: cmake-vs-gen
-	start *.sln
+	powershell -c "start ${VS_SOLUTION}"
