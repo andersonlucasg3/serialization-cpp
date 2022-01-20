@@ -1,6 +1,6 @@
 #if !defined(__APPLE__)
 
-#include "TestFramework/Assert.h"
+#include "Assert.h"
 
 #include "CppUnitTest.h"
 

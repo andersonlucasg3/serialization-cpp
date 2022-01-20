@@ -48,4 +48,7 @@ CMakeCache.txt
 Debug/
 *.framework
 *.xctest
-*.ninja
+*ninja*
+Testing/
+*.vcxproj*
+*.sln
