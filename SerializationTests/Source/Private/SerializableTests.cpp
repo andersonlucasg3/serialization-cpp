@@ -24,11 +24,11 @@ void ImplSerializableTests::TestSerializableOrder()
     Model m = Model();
     const list<BaseFieldData*>& fields = m.GetFields();
     list<BaseFieldData*>::const_iterator iterator = fields.begin();
-    Assert::AreEqual("a", (*iterator)->As<int>().GetName());
+    Assert::AreEqual("a", FieldData<int>::From(*iterator)->GetName());
     advance(iterator, 1);
-    Assert::AreEqual("b", (*iterator)->As<int>().GetName());
+    Assert::AreEqual("b", FieldData<int>::From(*iterator)->GetName());
     advance(iterator, 1);
-    Assert::AreEqual("c", (*iterator)->As<float>().GetName());
+    Assert::AreEqual("c", FieldData<float>::From(*iterator)->GetName());
 }
 
 void TestSerializeStructSigned(int sign)

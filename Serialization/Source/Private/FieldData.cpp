@@ -2,10 +2,21 @@
 
 #include <cstring>
 
-template<typename TType>
-FieldData<TType>& BaseFieldData::As()
+BaseFieldData& BaseFieldData::operator=(const BaseFieldData &other)
 {
-    return *reinterpret_cast<FieldData<TType>*>(this);
+    CopyFrom(other);
+}
+
+template<typename TType>
+FieldData<TType>& FieldData<TType>::From(BaseFieldData& other)
+{
+    return reinterpret_cast<FieldData<TType>&>(other);
+}
+
+template<typename TType>
+FieldData<TType>* FieldData<TType>::From(BaseFieldData* other)
+{
+    return reinterpret_cast<FieldData<TType>*>(other);
 }
 
 template<typename TType>
@@ -49,15 +60,31 @@ size_t& FieldData<TType>::PutData(uint8_t* into, size_t& currentSize) const
 }
 
 template<typename TType>
-size_t& FieldData<TType>::PeekData(uint8_t* from, size_t& currentSize)
+size_t& FieldData<TType>::PeekData(uint8_t* from, size_t& currentSize) const
 {
     memcpy(_ptr, from+currentSize, _typeSize);
     currentSize += _typeSize;
     return currentSize;
 }
 
+template<typename TType>
+void FieldData<TType>::CopyFrom(const BaseFieldData& other)
+{
+    const FieldData<TType>& oft = (const FieldData<TType>&)(other);
+    *_ptr = *oft._ptr;
+    // _typeSize should never change;
+    _name = oft._name;
+}
+
+template<typename TType>
+FieldData<TType>& FieldData<TType>::operator=(const FieldData<TType>& other)
+{
+    CopyFrom((BaseFieldData&)other);
+
+    return *this;
+}
+
 #define INSTANTIATE_ALL(type) \
-template struct FieldData<type>; \
-template FieldData<type>& BaseFieldData::As<type>();
+template struct FieldData<type>;
 
 #include "TemplateInstantiation.hpp"
