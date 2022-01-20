@@ -1,15 +1,5 @@
 #pragma once
 
-#include "Serializable.h"
-
-struct Model : public Serializable
-{
-public:
-    DECLARE_VAR(int, a)
-    DECLARE_VAR(int, b)
-    DECLARE_VAR(float, c)
-};
-
 class TestsImplementations
 {
 public:
@@ -17,19 +7,40 @@ public:
     static void TestSerializable();
     static void TestSerializableOrder();
     static void TestSerializeStruct();
+    static void TestDeserializeStruct();
 };
 
+#define DECLARE_ALL_TESTS() \
+    DECLARE_TEST(TestsImplementations, TestFieldData) \
+    DECLARE_TEST(TestsImplementations, TestSerializable) \
+    DECLARE_TEST(TestsImplementations, TestSerializableOrder) \
+    DECLARE_TEST(TestsImplementations, TestSerializeStruct) \
+    DECLARE_TEST(TestsImplementations, TestDeserializeStruct)
+
 #if !defined(__APPLE__)
+
+#define DECLARE_TEST_CLASS() \
+namespace SerializationTests \
+{ \
+    TEST_CLASS(SerializationTests) \
+    { \
+    public: \
+        DECLARE_ALL_TESTS() \
+    }; \
+}
+
 #define DECLARE_TEST(className, funcName) \
 TEST_METHOD(funcName) { className :: funcName (); }
+
 #else
+
+#define DECLARE_TEST_CLASS() \
+@interface SerializationTests : XCTestCase @end \
+@implementation SerializationTests \
+DECLARE_ALL_TESTS() \
+@end
+
 #define DECLARE_TEST(className, funcName) \
-- (void) test##funcName { className::funcName (); }
+- (void) test##funcName { className :: funcName (); }
+
 #endif
-
-
-#define DECLARE_ALL_TESTS() \
-DECLARE_TEST(TestsImplementations, TestFieldData) \
-DECLARE_TEST(TestsImplementations, TestSerializable) \
-DECLARE_TEST(TestsImplementations, TestSerializableOrder) \
-DECLARE_TEST(TestsImplementations, TestSerializeStruct)

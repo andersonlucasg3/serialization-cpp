@@ -16,7 +16,8 @@ public:
     template<typename TType>
     FieldData<TType>& As();
 
-    virtual size_t PutData(uint8_t* into, size_t& currentSize) const = 0;
+    virtual size_t& PutData(uint8_t* into, size_t& currentSize) const { };
+    virtual size_t& PeekData(uint8_t* from, size_t& currentSize) { };
 };
 
 template<typename TType>
@@ -36,5 +37,6 @@ public:
     void SetValue(TType newValue) const;
     [[nodiscard]] size_t GetSize() const;
 
-    size_t PutData(uint8_t *into, size_t &currentSize) const override;
+    size_t& PutData(uint8_t* into, size_t& currentSize) const override;
+    size_t& PeekData(uint8_t* from, size_t& currentSize) override;
 };

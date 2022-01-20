@@ -1,5 +1,17 @@
 #include "TestsImplementations.h"
+
+#include <cstring>
+
 #include "Assert.h"
+#include "Serializable.h"
+
+struct Model : public Serializable
+{
+public:
+    DECLARE_VAR(int, a)
+    DECLARE_VAR(int, b)
+    DECLARE_VAR(float, c)
+};
 
 void TestsImplementations::TestFieldData()
 {
@@ -67,4 +79,28 @@ void TestsImplementations::TestSerializeStruct()
     {
         Assert::AreEqual(*(compare + index), *(serializedData + index));
     }
+    
+    delete[] serializedData;
+    delete[] compare;
+}
+
+void TestsImplementations::TestDeserializeStruct()
+{
+    Model m = Model();
+    m.a = 10;
+    m.b = 50;
+    m.c = 3.14;
+    
+    uint8_t* serialized = m.Serialize();
+    
+    //m = Model();
+    m.a = 0;
+    m.b = 0;
+    m.c = 0.0;
+    
+    m.Deserialize(serialized);
+    
+    Assert::AreEqual<int>(10, m.a);
+    Assert::AreEqual<int>(50, m.b);
+    Assert::AreEqual<float>(3.14, m.c);
 }

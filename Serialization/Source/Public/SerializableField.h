@@ -14,7 +14,7 @@ public:
     SerializableField(Serializable* serializable, const char* name);
     SerializableField(Serializable* serializable, const char* name, TType other);
 
-    TType operator->() const;
+    operator TType() const;
     SerializableField<TType>& operator=(TType other);
 };
 

@@ -1,5 +1,7 @@
 #include "FieldData.h"
 
+#include <cstring>
+
 BaseFieldData::~BaseFieldData() = default;
 
 template<typename TType>
@@ -41,10 +43,19 @@ size_t FieldData<TType>::GetSize() const
 }
 
 template<typename TType>
-size_t FieldData<TType>::PutData(uint8_t* into, size_t& currentSize) const
+size_t& FieldData<TType>::PutData(uint8_t* into, size_t& currentSize) const
 {
     memcpy(into+currentSize, _ptr, _typeSize);
-    return currentSize + _typeSize;
+    currentSize += _typeSize;
+    return currentSize;
+}
+
+template<typename TType>
+size_t& FieldData<TType>::PeekData(uint8_t* from, size_t& currentSize)
+{
+    memcpy(_ptr, from+currentSize, _typeSize);
+    currentSize += _typeSize;
+    return currentSize;
 }
 
 #define INSTANTIATE_ALL(type) \

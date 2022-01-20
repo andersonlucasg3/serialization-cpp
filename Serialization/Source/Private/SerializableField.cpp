@@ -16,7 +16,7 @@ SerializableField<TType>::SerializableField(Serializable* serializable, const ch
 }
 
 template<typename TType>
-TType SerializableField<TType>::operator->() const
+SerializableField<TType>::operator TType() const
 {
     return _value;
 }

@@ -16,6 +16,12 @@ Serializable::Serializable()
     _dataSizeInBytes = 0;
 }
 
+Serializable::Serializable(Serializable& other)
+{
+    _fields = other._fields;
+    _dataSizeInBytes = other._dataSizeInBytes;
+}
+
 Serializable::~Serializable()
 {
     for (BaseFieldData* element : _fields)
@@ -24,6 +30,7 @@ Serializable::~Serializable()
     }
     
     _fields.clear();
+    _dataSizeInBytes = 0;
 }
 
 uint8_t *Serializable::Serialize() const
@@ -35,6 +42,15 @@ uint8_t *Serializable::Serialize() const
         position = element->PutData(buffer, position);
     }
     return buffer;
+}
+
+void Serializable::Deserialize(uint8_t *data)
+{
+    size_t position = 0;
+    for (BaseFieldData* element : _fields)
+    {
+        position = element->PeekData(data, position);
+    }
 }
 
 const list<BaseFieldData*>& Serializable::GetFields() const
