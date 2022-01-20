@@ -31,8 +31,6 @@ endif(APPLE)
 enable_testing()
 
 set(TEST_SOURCES_CPP
-        SerializationTests/Source/Private/Assert.cpp
-        SerializationTests/Source/Private/SerializationTests.cpp
         SerializationTests/Source/Private/TestsImplementations.cpp
         SerializationTests/Source/Public/Assert.h
         SerializationTests/Source/Public/TestsImplementations.h)
@@ -54,6 +52,10 @@ if (APPLE)
     include_directories(SerializationTests/Source/Public/)
 
 else()
+
+    list(APPEND TEST_SOURCES_CPP
+        SerializationTests/Source/Private/Assert.cpp
+        SerializationTests/Source/Private/SerializationTests.cpp)
 
     add_library(SerializationTests SHARED "${TEST_SOURCES_CPP}")
     set_target_properties(SerializationTests PROPERTIES

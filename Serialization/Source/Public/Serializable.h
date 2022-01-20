@@ -19,14 +19,15 @@ private:
 
 public:
 	Serializable();
-    Serializable(Serializable& other);
     ~Serializable();
     
-    [[nodiscard]] uint8_t* Serialize() const;
+    uint8_t* Serialize() const;
     void Deserialize(uint8_t* data);
     
-    [[nodiscard]] const list<BaseFieldData*>& GetFields() const;
-    [[nodiscard]] size_t GetTotalSizeInBytes() const;
+    const list<BaseFieldData*>& GetFields() const;
+    size_t GetTotalSizeInBytes() const;
+    
+    Serializable& operator=(const Serializable& other);
 
 	template<typename TType>
 	friend struct SerializableField;

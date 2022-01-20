@@ -2,8 +2,6 @@
 
 #include <cstring>
 
-BaseFieldData::~BaseFieldData() = default;
-
 template<typename TType>
 FieldData<TType>& BaseFieldData::As()
 {

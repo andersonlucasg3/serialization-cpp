@@ -8,6 +8,7 @@ public:
     static void TestSerializableOrder();
     static void TestSerializeStruct();
     static void TestDeserializeStruct();
+    static void TestCopyingStructValue();
 };
 
 #define DECLARE_ALL_TESTS() \
@@ -15,7 +16,8 @@ public:
     DECLARE_TEST(TestsImplementations, TestSerializable) \
     DECLARE_TEST(TestsImplementations, TestSerializableOrder) \
     DECLARE_TEST(TestsImplementations, TestSerializeStruct) \
-    DECLARE_TEST(TestsImplementations, TestDeserializeStruct)
+    DECLARE_TEST(TestsImplementations, TestDeserializeStruct) \
+    DECLARE_TEST(TestsImplementations, TestCopyingStructValue)
 
 #if !defined(__APPLE__)
 

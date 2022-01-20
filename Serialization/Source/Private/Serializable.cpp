@@ -16,12 +16,6 @@ Serializable::Serializable()
     _dataSizeInBytes = 0;
 }
 
-Serializable::Serializable(Serializable& other)
-{
-    _fields = other._fields;
-    _dataSizeInBytes = other._dataSizeInBytes;
-}
-
 Serializable::~Serializable()
 {
     for (BaseFieldData* element : _fields)
@@ -61,6 +55,25 @@ const list<BaseFieldData*>& Serializable::GetFields() const
 size_t Serializable::GetTotalSizeInBytes() const
 {
     return _dataSizeInBytes;
+}
+
+Serializable& Serializable::operator=(const Serializable &other)
+{
+    list<BaseFieldData*>::const_iterator iteratorThis = _fields.begin();
+    list<BaseFieldData*>::const_iterator iteratorOther = other._fields.begin();
+    for (int index; index < _fields.size(); ++index)
+    {
+        advance(iteratorThis, index);
+        advance(iteratorOther, index);
+        
+        BaseFieldData* dataTo = *iteratorThis;
+        BaseFieldData* dataFrom = *iteratorOther;
+        
+        *dataTo = *dataFrom;
+    }
+    
+    _dataSizeInBytes = other._dataSizeInBytes;
+    return *this;
 }
 
 #define INSTANTIATE_ALL(type) \

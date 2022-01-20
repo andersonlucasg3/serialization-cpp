@@ -47,17 +47,17 @@ void TestsImplementations::TestSerializableOrder()
     Assert::AreEqual("c", (*iterator)->As<float>().GetName());
 }
 
-void TestsImplementations::TestSerializeStruct()
+void TestSerializeStructSigned(int sign)
 {
     Model m = Model();
-    m.a = 0;
-    m.b = 1;
-    m.c = 3.14;
+    m.a = 0 * sign;
+    m.b = 1 * sign;
+    m.c = 3.14 * sign;
     
     uint8_t* serializedData = m.Serialize();
 
-    int value = 0;
-    float fvalue = 3.14;
+    int value = 0 * sign;
+    float fvalue = 3.14 * sign;
     size_t position = 0;
 
     uint8_t* compare = new uint8_t[m.GetTotalSizeInBytes()];
@@ -65,7 +65,7 @@ void TestsImplementations::TestSerializeStruct()
     memcpy(compare, &value, sizeof(int));
     position += sizeof(int);
 
-    value = 1;
+    value = 1 * sign;
 
     memcpy(compare + position, &value, sizeof(int));
     position += sizeof(int);
@@ -84,23 +84,55 @@ void TestsImplementations::TestSerializeStruct()
     delete[] compare;
 }
 
+void TestsImplementations::TestSerializeStruct()
+{
+    TestSerializeStructSigned(1);
+    TestSerializeStructSigned(-1);
+}
+
+void TestDeserializeStructSigned(int sign)
+{
+    Model m;
+    m.a = 10 * sign;
+    m.b = 50 * sign;
+    m.c = 3.14 * sign;
+    
+    uint8_t* serialized = m.Serialize();
+    
+    Model mm;
+    
+    mm.Deserialize(serialized);
+    
+    Assert::AreEqual<int>(10 * sign, mm.a);
+    Assert::AreEqual<int>(50 * sign, mm.b);
+    Assert::AreEqual<float>(3.14 * sign, mm.c);
+}
+
 void TestsImplementations::TestDeserializeStruct()
 {
-    Model m = Model();
+    TestDeserializeStructSigned(1);
+    TestDeserializeStructSigned(-1);
+}
+
+void TestsImplementations::TestCopyingStructValue()
+{
+    Model m;
     m.a = 10;
     m.b = 50;
     m.c = 3.14;
     
-    uint8_t* serialized = m.Serialize();
+    Model mm;
+    mm.a = 20;
+    mm.b = 60;
+    mm.c = 1.0;
     
-    //m = Model();
-    m.a = 0;
-    m.b = 0;
-    m.c = 0.0;
+    m = mm;
     
-    m.Deserialize(serialized);
+    mm.a = 0;
+    mm.b = 0;
+    mm.c = 0.0;
     
-    Assert::AreEqual<int>(10, m.a);
-    Assert::AreEqual<int>(50, m.b);
-    Assert::AreEqual<float>(3.14, m.c);
+    Assert::AreEqual<int>(20, m.a);
+    Assert::AreEqual<int>(60, m.b);
+    Assert::AreEqual<float>(1.0, m.c);
 }

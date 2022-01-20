@@ -11,7 +11,7 @@ struct FieldData;
 struct BaseFieldData
 {
 public:
-    virtual ~BaseFieldData();
+    virtual ~BaseFieldData() = default;
 
     template<typename TType>
     FieldData<TType>& As();
@@ -32,10 +32,10 @@ public:
     FieldData(TType* ptr, const char* name);
     ~FieldData() override = default;
 
-    [[nodiscard]] const char* GetName() const;
+    const char* GetName() const;
     TType GetValue() const;
     void SetValue(TType newValue) const;
-    [[nodiscard]] size_t GetSize() const;
+    size_t GetSize() const;
 
     size_t& PutData(uint8_t* into, size_t& currentSize) const override;
     size_t& PeekData(uint8_t* from, size_t& currentSize) override;
