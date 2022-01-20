@@ -1,5 +1,5 @@
-#include "TestsImplementations.h"
+#include "TestsDeclaration.h"
 
 #import <XCTest/XCTest.h>
 
-DECLARE_TEST_CLASS()
+DECLARE_ALL_TEST_CLASSES()

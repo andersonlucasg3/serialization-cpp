@@ -31,9 +31,12 @@ endif(APPLE)
 enable_testing()
 
 set(TEST_SOURCES_CPP
-        SerializationTests/Source/Private/TestsImplementations.cpp
+        SerializationTests/Source/Private/FieldDataTests.cpp
+        SerializationTests/Source/Private/SerializableTests.cpp
         SerializationTests/Source/Public/Assert.h
-        SerializationTests/Source/Public/TestsImplementations.h)
+        SerializationTests/Source/Public/FieldDataTests.h
+        SerializationTests/Source/Public/SerializableTests.h
+        SerializationTests/Source/Public/TestsDeclaration.h)
 
 if (APPLE)
 

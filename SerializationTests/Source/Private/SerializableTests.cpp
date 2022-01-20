@@ -1,4 +1,4 @@
-#include "TestsImplementations.h"
+#include "SerializableTests.h"
 
 #include <cstring>
 
@@ -13,29 +13,13 @@ public:
     DECLARE_VAR(float, c)
 };
 
-void TestsImplementations::TestFieldData()
-{
-    int value;
-    FieldData<int> fieldData = FieldData<int>(&value, "value");
-    
-    value = 10;
-    
-    Assert::AreEqual(value, fieldData.GetValue());
-    
-    fieldData.SetValue(20);
-    
-    Assert::AreEqual(value, fieldData.GetValue());
-    
-    Assert::AreEqual("value", fieldData.GetName());
-}
-
-void TestsImplementations::TestSerializable()
+void ImplSerializableTests::TestSerializable()
 {
     Model m = Model();
     Assert::AreEqual(3, (int)m.GetFields().size());
 }
 
-void TestsImplementations::TestSerializableOrder()
+void ImplSerializableTests::TestSerializableOrder()
 {
     Model m = Model();
     const list<BaseFieldData*>& fields = m.GetFields();
@@ -84,7 +68,7 @@ void TestSerializeStructSigned(int sign)
     delete[] compare;
 }
 
-void TestsImplementations::TestSerializeStruct()
+void ImplSerializableTests::TestSerializeStruct()
 {
     TestSerializeStructSigned(1);
     TestSerializeStructSigned(-1);
@@ -108,13 +92,13 @@ void TestDeserializeStructSigned(int sign)
     Assert::AreEqual<float>(3.14 * sign, mm.c);
 }
 
-void TestsImplementations::TestDeserializeStruct()
+void ImplSerializableTests::TestDeserializeStruct()
 {
     TestDeserializeStructSigned(1);
     TestDeserializeStructSigned(-1);
 }
 
-void TestsImplementations::TestCopyingStructValue()
+void ImplSerializableTests::TestCopyingStructValue()
 {
     Model m;
     m.a = 10;
