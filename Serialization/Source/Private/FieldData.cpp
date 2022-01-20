@@ -5,6 +5,8 @@
 BaseFieldData& BaseFieldData::operator=(const BaseFieldData &other)
 {
     CopyFrom(other);
+
+    return *this;
 }
 
 template<typename TType>
