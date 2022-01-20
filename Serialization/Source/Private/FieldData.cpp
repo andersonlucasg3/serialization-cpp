@@ -75,7 +75,7 @@ void FieldData<TType>::CopyFrom(const BaseFieldData& other)
     const FieldData<TType>& oft = (const FieldData<TType>&)(other);
     *_ptr = *oft._ptr;
     // _typeSize should never change;
-    _name = oft._name;
+    // _name should never change;
 }
 
 template<typename TType>
