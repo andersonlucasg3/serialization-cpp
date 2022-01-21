@@ -5,9 +5,11 @@ project(serialization-cpp)
 set(CMAKE_CXX_STANDARD 17)
 
 add_library(Serialization
+        Serialization/Source/Private/ByteArray.cpp
         Serialization/Source/Private/FieldData.cpp
         Serialization/Source/Private/Serializable.cpp
         Serialization/Source/Private/SerializableField.cpp
+        Serialization/Source/Private/ByteArray.h
         Serialization/Source/Public/FieldData.h
         Serialization/Source/Public/Serializable.h
         Serialization/Source/Public/SerializableField.h

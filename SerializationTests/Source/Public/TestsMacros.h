@@ -13,7 +13,12 @@ namespace SerializationTests \
 }
 
 #define DECLARE_TEST(className, funcName) \
-TEST_METHOD(funcName) { Impl##className :: funcName (); }
+TEST_METHOD(funcName) \
+{ \
+    Impl##className :: funcName (); \
+    Impl##className :: funcName (); \
+    Impl##className :: funcName (); \
+}
 
 #else
 
@@ -24,6 +29,11 @@ declareTests \
 @end
 
 #define DECLARE_TEST(className, funcName) \
-- (void) test##funcName { Impl##className :: funcName (); }
+- (void) test##funcName \
+{ \
+    Impl##className :: funcName (); \
+    Impl##className :: funcName (); \
+    Impl##className :: funcName (); \
+} \
 
 #endif

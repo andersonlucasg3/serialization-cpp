@@ -31,6 +31,14 @@ void ImplSerializableTests::TestSerializableOrder()
     Assert::AreEqual("c", FieldData<float>::From(*iterator)->GetName());
 }
 
+void CompareStreams(uint8_t* manuallyGeneratedData, uint8_t* serializedData, size_t totalSize)
+{
+    for (int index = 0; index < totalSize; ++index)
+    {
+        Assert::AreEqual(*(manuallyGeneratedData + index), *(serializedData + index));
+    }
+}
+
 void TestSerializeStructSigned(int sign)
 {
     Model m = Model();
@@ -59,10 +67,7 @@ void TestSerializeStructSigned(int sign)
 
     Assert::AreEqual(position, m.GetTotalSizeInBytes());
 
-    for (int index = 0; index < m.GetTotalSizeInBytes(); ++index)
-    {
-        Assert::AreEqual(*(compare + index), *(serializedData + index));
-    }
+    CompareStreams(compare, serializedData, m.GetTotalSizeInBytes());
     
     delete[] serializedData;
     delete[] compare;
@@ -112,11 +117,84 @@ void ImplSerializableTests::TestCopyingStructValue()
     
     m = mm;
     
-    mm.a = 0;
-    mm.b = 0;
-    mm.c = 0.0;
+    m.a = 0;
+    m.b = 0;
+    m.c = 0.0;
     
-    Assert::AreEqual<int>(20, m.a);
-    Assert::AreEqual<int>(60, m.b);
-    Assert::AreEqual<float>(1.0, m.c);
+    Assert::AreEqual<int>(0, mm.a);
+    Assert::AreEqual<int>(0, mm.b);
+    Assert::AreEqual<float>(.0, mm.c);
+    
+    Assert::AreEqual<int>(m.a, mm.a);
+    Assert::AreEqual<int>(m.b, mm.b);
+    Assert::AreEqual<float>(m.c, mm.c);
+}
+
+struct Person : public Serializable
+{
+public:
+    DECLARE_VAR(uint8_t, age);
+    DECLARE_VAR(const char*, name);
+    DECLARE_VAR(string, address);
+};
+
+void ImplSerializableTests::TestStringSerialization()
+{
+    Person person;
+    person.age = 10;
+    person.name = "Anderson Lucas C. Ramos";
+    person.address = "Rio de Janeiro";
+    
+    uint8_t* serializedPerson = person.Serialize();
+    
+    uint8_t* manualSerializedPerson = new uint8_t[person.GetTotalSizeInBytes()];
+    
+    size_t position = 0;
+    uint8_t age = 10;
+    const char *name = "Anderson Lucas C. Ramos";
+    uint32_t nameLen = strlen(name);
+    string address = "Rio de Janeiro";
+    uint32_t addressLen = address.size();
+    
+    memcpy(manualSerializedPerson, &age, sizeof(uint8_t));
+    position += sizeof(uint8_t);
+    
+    memcpy(manualSerializedPerson+position, &nameLen, sizeof(uint32_t));
+    position += sizeof(uint32_t);
+    
+    memcpy(manualSerializedPerson+position, name, nameLen);
+    position += nameLen;
+    
+    memcpy(manualSerializedPerson+position, &addressLen, sizeof(uint32_t));
+    position += sizeof(uint32_t);
+
+    memcpy(manualSerializedPerson+position, address.c_str(), addressLen);
+    position += addressLen;
+    
+    Assert::AreEqual(position, person.GetTotalSizeInBytes());
+    
+    CompareStreams(manualSerializedPerson, serializedPerson, person.GetTotalSizeInBytes());
+    
+    delete[] serializedPerson;
+    delete[] manualSerializedPerson;
+}
+
+void ImplSerializableTests::TestStringDeserialization()
+{
+    Person person;
+    person.age = 10;
+    person.name = "Anderson Lucas C. Ramos";
+    person.address = "Rio de Janeiro";
+    
+    uint8_t* serializedPerson = person.Serialize();
+    
+    Assert::AreEqual<size_t>(46, person.GetTotalSizeInBytes());
+    
+    Person deserializedPerson;
+    
+    deserializedPerson.Deserialize(serializedPerson);
+    
+    Assert::AreEqual<uint8_t>(person.age, deserializedPerson.age);
+    Assert::AreEqual<const char*>(person.name, deserializedPerson.name);
+    Assert::AreEqual<string>(person.address, deserializedPerson.address);
 }

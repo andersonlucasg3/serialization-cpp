@@ -2,11 +2,78 @@
 
 #include <cstring>
 
+size_t STRING_LENGTH_SIZE = sizeof(uint32_t);
+
 BaseFieldData& BaseFieldData::operator=(const BaseFieldData &other)
 {
     CopyFrom(other);
 
     return *this;
+}
+
+template<typename TType>
+void FieldData<TType>::CopyCStr(const char* input, const char** output)
+{
+    if (input == nullptr)
+    {
+        *output = nullptr;
+        
+        return;
+    }
+    
+    size_t bytesLen = strlen(input) + 1;
+    *output = new char[bytesLen];
+    strcpy((char*)*output, input);
+}
+
+template<typename TType>
+void FieldData<TType>::FreeCStr(const char** input)
+{
+    if (*input == nullptr) return;
+    
+    delete[] *input;
+    
+    *input = nullptr;
+}
+
+template<typename TType>
+void FieldData<TType>::CalculateValueSize()
+{
+    _typeSize = sizeof(TType);
+}
+
+template<>
+void FieldData<const char*>::CalculateValueSize()
+{
+    if (*_ptr == nullptr)
+    {
+        if (_typeSize > STRING_LENGTH_SIZE)
+        {
+            _typeSize = STRING_LENGTH_SIZE;
+        }
+        
+        return;
+    }
+    
+    size_t valueStrLen = strlen(*_ptr);
+    size_t typeSize = STRING_LENGTH_SIZE + valueStrLen;
+    
+    if (_typeSize != typeSize)
+    {
+        _typeSize = typeSize;
+    }
+}
+
+template<>
+void FieldData<string>::CalculateValueSize()
+{
+    size_t valueStrLen = _ptr->size();
+    size_t typeSize = STRING_LENGTH_SIZE + valueStrLen;
+    
+    if (_typeSize != typeSize)
+    {
+        _typeSize = typeSize;
+    }
 }
 
 template<typename TType>
@@ -22,17 +89,41 @@ FieldData<TType>* FieldData<TType>::From(BaseFieldData* other)
 }
 
 template<typename TType>
-FieldData<TType>::FieldData(TType* ptr, const char *name)
+FieldData<TType>::FieldData(const char *name)
 {
-    _ptr = ptr;
-    _typeSize = sizeof(TType);
-    _name = string(name);
+    _ptr = new TType[1];
+    
+    if constexpr (std::is_same_v<TType, const char*>)
+    {
+        *_ptr = nullptr;
+    }
+    
+    CopyCStr(name, &_name);
+    
+    CalculateValueSize();
+}
+
+template<typename TType>
+FieldData<TType>::~FieldData<TType>()
+{
+    delete[] _name;
+    delete[] _ptr;
+}
+
+template<>
+FieldData<const char*>::~FieldData()
+{
+    delete[] _name;
+    
+    FreeCStr(_ptr);
+    
+    delete[] _ptr;
 }
 
 template<typename TType>
 const char* FieldData<TType>::GetName() const
 {
-    return _name.c_str();
+    return _name;
 }
 
 template<typename TType>
@@ -42,14 +133,55 @@ TType FieldData<TType>::GetValue() const
 }
 
 template<typename TType>
-void FieldData<TType>::SetValue(TType newValue) const
+void FieldData<TType>::SetValue(TType newValue)
 {
     *_ptr = newValue;
 }
 
-template<typename TType>
-size_t FieldData<TType>::GetSize() const
+template<>
+void FieldData<const char*>::SetValue(const char* newValue)
 {
+    FreeCStr(_ptr);
+    
+    if (newValue == nullptr)
+    {
+        CalculateValueSize();
+        
+        return;
+    }
+    
+    CopyCStr(newValue, _ptr);
+    
+    CalculateValueSize();
+}
+
+template<>
+void FieldData<string>::SetValue(string newValue)
+{
+    *_ptr = newValue;
+    
+    CalculateValueSize();
+}
+
+template<typename TType>
+size_t FieldData<TType>::GetSize()
+{
+    return _typeSize;
+}
+
+template<>
+size_t FieldData<const char*>::GetSize()
+{
+    CalculateValueSize();
+    
+    return _typeSize;
+}
+
+template<>
+size_t FieldData<string>::GetSize()
+{
+    CalculateValueSize();
+    
     return _typeSize;
 }
 
@@ -62,10 +194,70 @@ size_t& FieldData<TType>::PutData(uint8_t* into, size_t& currentSize) const
 }
 
 template<typename TType>
-size_t& FieldData<TType>::PeekData(uint8_t* from, size_t& currentSize) const
+size_t& FieldData<TType>::PutDataString(const char* ptr, size_t typeSize, size_t& currentSize, uint8_t* into) const
+{
+    uint32_t stringLength = typeSize - STRING_LENGTH_SIZE;
+    memcpy(into+currentSize, &stringLength, STRING_LENGTH_SIZE);
+    currentSize += STRING_LENGTH_SIZE;
+    if (stringLength > 0)
+    {
+        memcpy(into+currentSize, ptr, stringLength);
+        currentSize += stringLength;
+    }
+    return currentSize;
+}
+
+template<>
+size_t& FieldData<const char*>::PutData(uint8_t* into, size_t& currentSize) const
+{
+    return PutDataString(*_ptr, _typeSize, currentSize, into);
+}
+
+template<>
+size_t& FieldData<string>::PutData(uint8_t* into, size_t& currentSize) const
+{
+    return PutDataString(_ptr->c_str(), _typeSize, currentSize, into);
+}
+
+template<typename TType>
+size_t& FieldData<TType>::PeekData(uint8_t* from, size_t& currentSize)
 {
     memcpy(_ptr, from+currentSize, _typeSize);
     currentSize += _typeSize;
+    return currentSize;
+}
+
+template<typename TType>
+size_t& FieldData<TType>::PeekDataString(const char** ptr, size_t& currentSize, uint8_t* from)
+{
+    uint32_t stringLength;
+    memcpy(&stringLength, from+currentSize, STRING_LENGTH_SIZE);
+    currentSize += STRING_LENGTH_SIZE;
+    
+    FreeCStr(ptr);
+    
+    size_t bytesLen = stringLength + 1;
+    *ptr = new char[bytesLen];
+    memset((void*)*ptr, 0, bytesLen);
+    
+    memcpy((void*)*ptr, from+currentSize, stringLength);
+    currentSize += stringLength;
+    
+    return currentSize;
+}
+
+template<>
+size_t& FieldData<const char*>::PeekData(uint8_t* from, size_t& currentSize)
+{
+    return PeekDataString(_ptr, currentSize, from);
+}
+
+template<>
+size_t& FieldData<string>::PeekData(uint8_t* from, size_t& currentSize)
+{
+    const char* str = nullptr;
+    currentSize = PeekDataString(&str, currentSize, from);
+    *_ptr = str;
     return currentSize;
 }
 
@@ -74,8 +266,19 @@ void FieldData<TType>::CopyFrom(const BaseFieldData& other)
 {
     const FieldData<TType>& oft = (const FieldData<TType>&)(other);
     *_ptr = *oft._ptr;
-    // _typeSize should never change;
-    // _name should never change;
+}
+
+template<>
+void FieldData<const char*>::CopyFrom(const BaseFieldData& other)
+{
+    const FieldData<const char*>& oft = (const FieldData<const char*>&)(other);
+    
+    FreeCStr(_ptr);
+    
+    if (*oft._ptr != nullptr)
+    {
+        CopyCStr(*oft._ptr, _ptr);
+    }
 }
 
 template<typename TType>

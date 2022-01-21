@@ -3,8 +3,6 @@
 template<typename TType>
 void Serializable::AddField(FieldData<TType>* fieldData)
 {
-    _dataSizeInBytes += sizeof(TType);
-    
     list<BaseFieldData*>::iterator endIndex = end(_fields);
     
     _fields.insert(endIndex, fieldData);
@@ -13,7 +11,6 @@ void Serializable::AddField(FieldData<TType>* fieldData)
 Serializable::Serializable()
 {
     _fields = list<BaseFieldData*>();
-    _dataSizeInBytes = 0;
 }
 
 Serializable::~Serializable()
@@ -24,12 +21,11 @@ Serializable::~Serializable()
     }
     
     _fields.clear();
-    _dataSizeInBytes = 0;
 }
 
 uint8_t *Serializable::Serialize() const
 {
-    uint8_t* buffer = new uint8_t[_dataSizeInBytes];
+    uint8_t* buffer = new uint8_t[GetTotalSizeInBytes()];
     size_t position = 0;
     for (BaseFieldData* element : _fields)
     {
@@ -54,7 +50,14 @@ const list<BaseFieldData*>& Serializable::GetFields() const
 
 size_t Serializable::GetTotalSizeInBytes() const
 {
-    return _dataSizeInBytes;
+    size_t dataSizeInBytes = 0;
+    
+    for (BaseFieldData* field : _fields)
+    {
+        dataSizeInBytes += field->GetSize();
+    }
+    
+    return dataSizeInBytes;
 }
 
 Serializable& Serializable::operator=(const Serializable &other)
@@ -73,10 +76,8 @@ Serializable& Serializable::operator=(const Serializable &other)
         BaseFieldData* dataTo = *iteratorThis;
         BaseFieldData* dataFrom = *iteratorOther;
         
-        *dataTo = *dataFrom;
+        dataTo->CopyFrom(*dataFrom);
     }
-    
-    _dataSizeInBytes = other._dataSizeInBytes;
     
     return *this;
 }

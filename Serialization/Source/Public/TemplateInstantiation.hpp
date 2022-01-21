@@ -1,3 +1,5 @@
+#include <string>
+#include "ByteArray.h"
 
 INSTANTIATE_ALL(int8_t)
 INSTANTIATE_ALL(uint8_t)
@@ -11,3 +13,5 @@ INSTANTIATE_ALL(size_t)
 INSTANTIATE_ALL(float)
 INSTANTIATE_ALL(double)
 INSTANTIATE_ALL(const char*)
+INSTANTIATE_ALL(std::string)
+INSTANTIATE_ALL(ByteArray)

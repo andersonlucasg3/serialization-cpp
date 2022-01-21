@@ -8,7 +8,7 @@ template<typename TType>
 struct SerializableField
 {
 private:
-    TType _value;
+    FieldData<TType>* _fieldData;
 
 public:
     SerializableField(Serializable* serializable, const char* name);
@@ -16,6 +16,8 @@ public:
 
     operator TType() const;
     SerializableField<TType>& operator=(TType other);
+    bool operator==(SerializableField<TType>& rvalue) const;
+    bool operator==(TType& rvalue) const;
 };
 
 #define DECLARE_VAR(type, name) \

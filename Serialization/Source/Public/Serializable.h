@@ -12,10 +12,11 @@ struct Serializable
 {
 private:
 	list<BaseFieldData*> _fields;
-    size_t _dataSizeInBytes;
     
     template<typename TType>
     void AddField(FieldData<TType>* fieldData);
+    
+    void OnFieldSizeUpdated(size_t sizeDelta);
 
 public:
 	Serializable();
