@@ -1,6 +1,6 @@
 #include "FieldDataTests.h"
 #include "FieldData.h"
-#include "ByteArray.h"
+#include "MemoryBuffer.h"
 
 #include "Assert.h"
 
@@ -40,7 +40,7 @@ void ImplFieldDataTests::TestFieldDataTypes()
     TestDataType<double>(10.0);
     TestDataType<const char *>("some string to be tested");
     uint8_t array[] = { 0, 1, 2, 3, 4, 5, 6, 7 };
-    TestDataType<ByteArray>(ByteArray(array, 8));
+    TestDataType<MemoryBuffer<uint8_t>>(MemoryBuffer(array, 8));
 }
 
 void ImplFieldDataTests::TestFieldDataString()

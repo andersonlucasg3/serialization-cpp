@@ -1,6 +1,7 @@
 #include "FieldData.h"
 
 #include <cstring>
+#include "MemoryBuffer.h"
 
 size_t STRING_LENGTH_SIZE = sizeof(uint32_t);
 
@@ -185,10 +186,17 @@ size_t FieldData<string>::GetSize()
     return _typeSize;
 }
 
+template<>
+size_t FieldData<BaseBuffer>::GetSize()
+{
+    if (_ptr == nullptr) return 0;
+    return sizeof(size_t) + _ptr->Length();
+}
+
 template<typename TType>
 size_t& FieldData<TType>::PutData(uint8_t* into, size_t& currentSize) const
 {
-    memcpy(into+currentSize, _ptr, _typeSize);
+    memcpy(into+currentSize, (void*)_ptr, _typeSize);
     currentSize += _typeSize;
     return currentSize;
 }
@@ -219,10 +227,25 @@ size_t& FieldData<string>::PutData(uint8_t* into, size_t& currentSize) const
     return PutDataString(_ptr->c_str(), _typeSize, currentSize, into);
 }
 
+template<>
+size_t& FieldData<BaseBuffer>::PutData(uint8_t* into, size_t& currentSize) const
+{
+    if (_ptr == nullptr) return currentSize;
+    
+    size_t len = _ptr->Length();
+    memcpy(into+currentSize, &len, sizeof(size_t));
+    currentSize += sizeof(size_t);
+    
+    memcpy(into+currentSize, _ptr->GetBuffer(), len);
+    currentSize += len;
+    
+    return currentSize;
+}
+
 template<typename TType>
 size_t& FieldData<TType>::PeekData(uint8_t* from, size_t& currentSize)
 {
-    memcpy(_ptr, from+currentSize, _typeSize);
+    memcpy((void*)_ptr, from+currentSize, _typeSize);
     currentSize += _typeSize;
     return currentSize;
 }
@@ -238,7 +261,7 @@ size_t& FieldData<TType>::PeekDataString(const char** ptr, size_t& currentSize, 
     
     size_t bytesLen = stringLength + 1;
     *ptr = new char[bytesLen];
-    memset((void*)*ptr, 0, bytesLen);
+    memset((void*)(*ptr+stringLength), 0, sizeof(char));
     
     memcpy((void*)*ptr, from+currentSize, stringLength);
     currentSize += stringLength;
@@ -258,6 +281,22 @@ size_t& FieldData<string>::PeekData(uint8_t* from, size_t& currentSize)
     const char* str = nullptr;
     currentSize = PeekDataString(&str, currentSize, from);
     *_ptr = str;
+    return currentSize;
+}
+
+template<>
+size_t& FieldData<BaseBuffer>::PeekData(uint8_t* from, size_t& currentSize)
+{
+    size_t len;
+    memcpy(&len, from+currentSize, sizeof(size_t));
+    currentSize += sizeof(size_t);
+    
+    uint8_t* buffer = new uint8_t[len];
+    memcpy(buffer, from+currentSize, len);
+    currentSize += len;
+    
+    _ptr->Set(buffer, len, false);
+    
     return currentSize;
 }
 
@@ -290,6 +329,7 @@ FieldData<TType>& FieldData<TType>::operator=(const FieldData<TType>& other)
 }
 
 #define INSTANTIATE_ALL(type) \
-template struct FieldData<type>;
+template struct FieldData<type>; \
+template struct FieldData<MemoryBuffer<type>>;
 
 #include "TemplateInstantiation.hpp"

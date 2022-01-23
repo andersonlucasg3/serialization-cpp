@@ -41,6 +41,7 @@ bool SerializableField<TType>::operator==(TType& rvalue) const
 }
 
 #define INSTANTIATE_ALL(type) \
-template struct SerializableField<type>;
+template struct SerializableField<type>; \
+template struct SerializableField<MemoryBuffer<type>>;
 
 #include "TemplateInstantiation.hpp"

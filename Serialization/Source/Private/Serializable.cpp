@@ -83,6 +83,7 @@ Serializable& Serializable::operator=(const Serializable &other)
 }
 
 #define INSTANTIATE_ALL(type) \
-template void Serializable::AddField<type>(FieldData<type>*);
+template void Serializable::AddField<type>(FieldData<type>*); \
+template void Serializable::AddField<MemoryBuffer<type>>(FieldData<MemoryBuffer<type>>*);
 
 #include "TemplateInstantiation.hpp"

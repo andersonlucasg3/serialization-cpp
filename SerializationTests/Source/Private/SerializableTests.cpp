@@ -4,6 +4,7 @@
 
 #include "Assert.h"
 #include "Serializable.h"
+#include "MemoryBuffer.h"
 
 struct Model : public Serializable
 {
@@ -197,4 +198,46 @@ void ImplSerializableTests::TestStringDeserialization()
     Assert::AreEqual<uint8_t>(person.age, deserializedPerson.age);
     Assert::AreEqual<const char*>(person.name, deserializedPerson.name);
     Assert::AreEqual<string>(person.address, deserializedPerson.address);
+}
+
+struct StreamSerializable : public Serializable
+{
+public:
+    DECLARE_VAR(int, someInt)
+    DECLARE_VAR(MemoryBuffer<uint8_t>, stringAsByteArray)
+    DECLARE_VAR(const char*, stringJustForFun)
+};
+
+void ImplSerializableTests::TestByteArraySerialization()
+{
+    const char *strContent = "I just want to test byte array serialization";
+    size_t len = strlen(strContent);
+    
+    const char* stringForFun = "Some string to make it fun";
+    
+    uint8_t* strAsBytes = new uint8_t[len];
+    memcpy(strAsBytes, strContent, len);
+    
+    StreamSerializable toSerialize;
+    toSerialize.someInt = 128;
+    toSerialize.stringAsByteArray = MemoryBuffer(strAsBytes, len, false);
+    toSerialize.stringJustForFun = stringForFun;
+    
+    uint8_t* serializedStream = toSerialize.Serialize();
+    
+    StreamSerializable toDeserialize;
+    toDeserialize.Deserialize(serializedStream);
+    
+    Assert::AreEqual<int>(128, toDeserialize.someInt);
+    
+    MemoryBuffer<uint8_t> byteArray = toDeserialize.stringAsByteArray;
+    
+    const uint8_t* deserializedBytes = byteArray.GetBuffer();
+    char* deserializedStrContent = new char[byteArray.Length() + 1];
+    memset(deserializedStrContent+byteArray.Length(), 0, 1);
+    memcpy(deserializedStrContent, deserializedBytes, byteArray.Length());
+    
+    Assert::AreEqual(strContent, const_cast<const char*>(deserializedStrContent));
+    
+    Assert::AreEqual<const char*>(stringForFun, toDeserialize.stringJustForFun);
 }

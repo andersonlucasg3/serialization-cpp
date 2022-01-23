@@ -1,5 +1,5 @@
 #include "Assert.h"
-#include "ByteArray.h"
+#include "MemoryBuffer.h"
 
 #import <XCTest/XCTest.h>
 
@@ -13,7 +13,7 @@ void Assert::AreEqual(TType value1, TType value2)
         XCTAssertTrue([string1 isEqualToString:string2], @"\"%@\" is not equal to \"%@\"", string1, string2);
         return;
     }
-    else if constexpr (std::is_same_v<TType, ByteArray>)
+    else if constexpr (std::is_base_of_v<BaseBuffer, TType>)
     {
         XCTAssertTrue(value1 == value2,
                       @"byte array value1 %s with length %zu is not equal to byte array value2 %s with length %zu",
@@ -45,6 +45,8 @@ void Assert::AreNotEqual(TType value1, TType value2)
 template void Assert::AreEqual(type, type); \
 template void Assert::AreNotEqual(type, type); \
 template void Assert::AreEqual(type*, type*); \
-template void Assert::AreNotEqual(type*, type*);
+template void Assert::AreNotEqual(type*, type*); \
+template void Assert::AreEqual(MemoryBuffer<type>, MemoryBuffer<type>); \
+template void Assert::AreNotEqual(MemoryBuffer<type>, MemoryBuffer<type>);
 
 #include "TemplateInstantiation.hpp"
