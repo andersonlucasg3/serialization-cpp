@@ -5,14 +5,14 @@ project(serialization-cpp)
 set(CMAKE_CXX_STANDARD 17)
 
 add_library(Serialization
-        Serialization/Source/Private/ByteArray.cpp
+        Serialization/Source/Private/MemoryBuffer.cpp
         Serialization/Source/Private/FieldData.cpp
         Serialization/Source/Private/Serializable.cpp
         Serialization/Source/Private/SerializableField.cpp
-        Serialization/Source/Private/ByteArray.h
         Serialization/Source/Public/FieldData.h
         Serialization/Source/Public/Serializable.h
         Serialization/Source/Public/SerializableField.h
+        Serialization/Source/Public/MemoryBuffer.h
         Serialization/Source/Public/TemplateInstantiation.hpp)
 
 target_include_directories(Serialization
@@ -35,11 +35,11 @@ enable_testing()
 set(TEST_SOURCES_CPP
         SerializationTests/Source/Private/FieldDataTests.cpp
         SerializationTests/Source/Private/SerializableTests.cpp
-        SerializationTests/Source/Private/ByteArrayTests.cpp
+        SerializationTests/Source/Private/MemoryBufferTests.cpp
         SerializationTests/Source/Public/Assert.h
         SerializationTests/Source/Public/FieldDataTests.h
         SerializationTests/Source/Public/SerializableTests.h
-        SerializationTests/Source/Public/ByteArrayTests.h
+        SerializationTests/Source/Public/MemoryBufferTests.h
         SerializationTests/Source/Public/TestsDeclaration.h)
 
 if (APPLE)

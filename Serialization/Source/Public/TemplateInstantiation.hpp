@@ -1,6 +1,7 @@
 #include <string>
 #include "MemoryBuffer.h"
 
+INSTANTIATE_ALL(bool)
 INSTANTIATE_ALL(int8_t)
 INSTANTIATE_ALL(uint8_t)
 INSTANTIATE_ALL(int16_t)
