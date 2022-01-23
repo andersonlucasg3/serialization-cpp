@@ -43,6 +43,8 @@ void Assert::AreNotEqual(TType value1, TType value2)
 
 #define INSTANTIATE_ALL(type) \
 template void Assert::AreEqual(type, type); \
-template void Assert::AreNotEqual(type, type);
+template void Assert::AreNotEqual(type, type); \
+template void Assert::AreEqual(type*, type*); \
+template void Assert::AreNotEqual(type*, type*);
 
 #include "TemplateInstantiation.hpp"
