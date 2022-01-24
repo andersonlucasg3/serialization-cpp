@@ -52,3 +52,12 @@ void ImplMemoryBufferTests::TestMemoryBufferAllocation()
     
     delete[] heapBuffer2;
 }
+
+void ImplMemoryBufferTests::TestMemoryBufferTypes()
+{
+    MemoryBuffer<float> buffer;
+    
+    // testar vários tipos, float, double, long, bla, bla, bla...
+    
+    Assert::AreEqual(true, false);
+}
