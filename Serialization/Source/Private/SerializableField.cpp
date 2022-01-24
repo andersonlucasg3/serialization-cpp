@@ -1,3 +1,4 @@
+#include "..\Public\SerializableField.h"
 #include "SerializableField.h"
 #include "Serializable.h"
 #include "FieldData.h"

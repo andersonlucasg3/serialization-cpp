@@ -55,9 +55,11 @@ void ImplMemoryBufferTests::TestMemoryBufferAllocation()
 
 void ImplMemoryBufferTests::TestMemoryBufferTypes()
 {
-    MemoryBuffer<float> buffer;
+    MemoryBuffer<uint16_t> uint16Buffer(new uint16_t[2] { 14, 152 }, 2, false);
+    MemoryBuffer<uint64_t> unit64Buffer(new uint64_t[2]{ 1512, 9395 }, 2, false);
+    MemoryBuffer<float> floatBuffer(new float[2]{ 515.124, 3.14 }, 2, false);
+    MemoryBuffer<double> doubleBuffer(new double[2]{ 19835.931859583958, 135.19385399835 }, 2, false);
     
-    // testar vários tipos, float, double, long, bla, bla, bla...
-    
-    Assert::AreEqual(true, false);
+    Assert::AreEqual<size_t>(2, uint16Buffer.Length());
+    Assert::AreEqual<size_t>(4, uint16Buffer.Length<uint8_t>());
 }

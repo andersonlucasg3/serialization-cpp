@@ -4,6 +4,7 @@
 
 #include "Assert.h"
 #include "Serializable.h"
+#include "SerializableField.h"
 #include "MemoryBuffer.h"
 
 struct Model : public Serializable
@@ -220,7 +221,7 @@ void ImplSerializableTests::TestByteArraySerialization()
     
     StreamSerializable toSerialize;
     toSerialize.someInt = 128;
-    toSerialize.stringAsByteArray = MemoryBuffer(strAsBytes, len, false);
+    toSerialize.stringAsByteArray = MemoryBuffer<uint8_t>(strAsBytes, len, false);
     toSerialize.stringJustForFun = stringForFun;
     
     uint8_t* serializedStream = toSerialize.Serialize();
@@ -230,7 +231,7 @@ void ImplSerializableTests::TestByteArraySerialization()
     
     Assert::AreEqual<int>(128, toDeserialize.someInt);
     
-    MemoryBuffer<uint8_t> byteArray = toDeserialize.stringAsByteArray;
+    MemoryBuffer<uint8_t> byteArray = toDeserialize.stringAsByteArray.operator MemoryBuffer<uint8_t>();
     
     const uint8_t* deserializedBytes = byteArray.GetBuffer();
     char* deserializedStrContent = new char[byteArray.Length() + 1];
