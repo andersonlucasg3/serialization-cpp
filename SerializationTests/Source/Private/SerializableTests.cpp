@@ -209,7 +209,7 @@ public:
     DECLARE_VAR(const char*, stringJustForFun)
 };
 
-void ImplSerializableTests::TestByteArraySerialization()
+void ImplSerializableTests::TestMemoryBufferSerialization()
 {
     const char *strContent = "I just want to test byte array serialization";
     size_t len = strlen(strContent);

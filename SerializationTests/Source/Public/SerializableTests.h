@@ -10,7 +10,7 @@ public:
     static void TestCopyingStructValue();
     static void TestStringSerialization();
     static void TestStringDeserialization();
-    static void TestByteArraySerialization();
+    static void TestMemoryBufferSerialization();
 };
 
 #define DECLARE_SERIALIZABLE_TESTS() \
@@ -21,4 +21,4 @@ DECLARE_TEST(SerializableTests, TestDeserializeStruct) \
 DECLARE_TEST(SerializableTests, TestCopyingStructValue) \
 DECLARE_TEST(SerializableTests, TestStringSerialization) \
 DECLARE_TEST(SerializableTests, TestStringDeserialization) \
-DECLARE_TEST(SerializableTests, TestByteArraySerialization)
+DECLARE_TEST(SerializableTests, TestMemoryBufferSerialization)
