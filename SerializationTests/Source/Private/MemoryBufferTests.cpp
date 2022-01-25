@@ -56,10 +56,24 @@ void ImplMemoryBufferTests::TestMemoryBufferAllocation()
 void ImplMemoryBufferTests::TestMemoryBufferTypes()
 {
     MemoryBuffer<uint16_t> uint16Buffer(new uint16_t[2] { 14, 152 }, 2, false);
-    MemoryBuffer<uint64_t> unit64Buffer(new uint64_t[2]{ 1512, 9395 }, 2, false);
-    MemoryBuffer<float> floatBuffer(new float[2]{ 515.124, 3.14 }, 2, false);
-    MemoryBuffer<double> doubleBuffer(new double[2]{ 19835.931859583958, 135.19385399835 }, 2, false);
     
     Assert::AreEqual<size_t>(2, uint16Buffer.Length());
     Assert::AreEqual<size_t>(4, uint16Buffer.Length<uint8_t>());
+    
+    MemoryBuffer<uint64_t> uint64Buffer(new uint64_t[2]{ 1512, 9395 }, 2, false);
+    
+    Assert::AreEqual<size_t>(2, uint64Buffer.Length());
+    Assert::AreEqual<size_t>(4, uint64Buffer.Length<uint32_t>());
+    Assert::AreEqual<size_t>(8, uint64Buffer.Length<uint16_t>());
+    Assert::AreEqual<size_t>(16, uint64Buffer.Length<uint8_t>());
+    
+    MemoryBuffer<float> floatBuffer(new float[2]{ 515.124, 3.14 }, 2, false);
+    
+    Assert::AreEqual<size_t>(2, floatBuffer.Length());
+    Assert::AreEqual<size_t>(8, floatBuffer.Length<uint8_t>());
+    
+    MemoryBuffer<double> doubleBuffer(new double[2]{ 19835.931859583958, 135.19385399835 }, 2, false);
+    
+    Assert::AreEqual<size_t>(2, doubleBuffer.Length());
+    Assert::AreEqual<size_t>(16, doubleBuffer.Length<uint8_t>());
 }

@@ -142,14 +142,7 @@ const uint8_t* MemoryBuffer<TBufferType>::GetBuffer() const
 template<typename TBufferType>
 const size_t MemoryBuffer<TBufferType>::Length() const
 {
-    return _lengthInBytes;
-}
-
-template<typename TBufferType>
-template<typename TDataType>
-const size_t MemoryBuffer<TBufferType>::Length() const
-{
-    return _lengthInBytes / sizeof(TDataType);
+    return _lengthForBuffer;
 }
 
 template<typename TBufferType>

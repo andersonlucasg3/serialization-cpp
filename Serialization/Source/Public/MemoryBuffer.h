@@ -44,9 +44,12 @@ public:
     const uint8_t* GetBuffer() const override;
     const size_t Length() const override;
     
-    template<typename TDataType>
-    const size_t Length() const;
-    
     MemoryBuffer& operator=(MemoryBuffer& other);
     bool operator==(const MemoryBuffer& other) const;
+    
+    template<typename TDataType>
+    const size_t Length() const
+    {
+        return _lengthInBytes / sizeof(TDataType);
+    }
 };
