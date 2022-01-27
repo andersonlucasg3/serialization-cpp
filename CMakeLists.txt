@@ -2,18 +2,26 @@ cmake_minimum_required(VERSION 3.21.1)
 
 project(serialization-cpp)
 
+include(cmake/CPM.cmake)
+
+CPMAddPackage(
+  NAME GroupSourcesByFolder.cmake
+  GITHUB_REPOSITORY TheLartians/GroupSourcesByFolder.cmake
+  VERSION 1.0
+)
+
+add_subdirectory(GroupSourcesByFolder)
+
 set(CMAKE_CXX_STANDARD 17)
 
 add_library(Serialization
-        Serialization/Source/Private/MemoryBuffer.cpp
-        Serialization/Source/Private/FieldData.cpp
-        Serialization/Source/Private/Serializable.cpp
-        Serialization/Source/Private/SerializableField.cpp
-        Serialization/Source/Public/FieldData.h
-        Serialization/Source/Public/Serializable.h
-        Serialization/Source/Public/SerializableField.h
-        Serialization/Source/Public/MemoryBuffer.h
-        Serialization/Source/Public/TemplateInstantiation.hpp)
+            "${CMAKE_CURRENT_SOURCE_DIR}/Serialization/Source/Private/Serializable.cpp"
+            "${CMAKE_CURRENT_SOURCE_DIR}/Serialization/Source/Private/FieldData.cpp"
+
+            "${CMAKE_CURRENT_SOURCE_DIR}/Serialization/Source/Public/MemoryBuffer.h"
+            "${CMAKE_CURRENT_SOURCE_DIR}/Serialization/Source/Public/Serializable.h"
+            "${CMAKE_CURRENT_SOURCE_DIR}/Serialization/Source/Public/FieldData.h"
+            "${CMAKE_CURRENT_SOURCE_DIR}/Serialization/Source/Public/SerializableField.h")
 
 target_include_directories(Serialization
         PUBLIC
@@ -33,14 +41,14 @@ endif(APPLE)
 enable_testing()
 
 set(TEST_SOURCES_CPP
-        SerializationTests/Source/Private/FieldDataTests.cpp
-        SerializationTests/Source/Private/SerializableTests.cpp
-        SerializationTests/Source/Private/MemoryBufferTests.cpp
-        SerializationTests/Source/Public/Assert.h
-        SerializationTests/Source/Public/FieldDataTests.h
-        SerializationTests/Source/Public/SerializableTests.h
-        SerializationTests/Source/Public/MemoryBufferTests.h
-        SerializationTests/Source/Public/TestsDeclaration.h)
+            "${CMAKE_CURRENT_SOURCE_DIR}/SerializationTests/Source/Private/FieldDataTests.cpp"
+            "${CMAKE_CURRENT_SOURCE_DIR}/SerializationTests/Source/Private/SerializableTests.cpp"
+            "${CMAKE_CURRENT_SOURCE_DIR}/SerializationTests/Source/Private/MemoryBufferTests.cpp"
+            "${CMAKE_CURRENT_SOURCE_DIR}/SerializationTests/Source/Public/Test.h"
+            "${CMAKE_CURRENT_SOURCE_DIR}/SerializationTests/Source/Public/FieldDataTests.h"
+            "${CMAKE_CURRENT_SOURCE_DIR}/SerializationTests/Source/Public/SerializableTests.h"
+            "${CMAKE_CURRENT_SOURCE_DIR}/SerializationTests/Source/Public/MemoryBufferTests.h"
+            "${CMAKE_CURRENT_SOURCE_DIR}/SerializationTests/Source/Public/TestsDeclaration.h")
 
 if (APPLE)
 
@@ -50,9 +58,9 @@ if (APPLE)
 
     xctest_add_bundle(SerializationTests Serialization)
 
-    list(APPEND TEST_SOURCES_CPP 
-        SerializationTests/Source/Private/Assert.mm
-        SerializationTests/Source/Private/SerializationTests.mm)
+    list(APPEND TEST_SOURCES_CPP
+            "${CMAKE_CURRENT_SOURCE_DIR}/SerializationTests/Source/Private/SerializationTests.mm"
+            "${CMAKE_CURRENT_SOURCE_DIR}/SerializationTests/Source/Private/Test.mm")
 
     target_sources(SerializationTests PRIVATE "${TEST_SOURCES_CPP}")
 
@@ -61,15 +69,16 @@ if (APPLE)
 else()
 
     list(APPEND TEST_SOURCES_CPP
-        SerializationTests/Source/Private/Assert.cpp
-        SerializationTests/Source/Private/SerializationTests.cpp)
+            "${CMAKE_CURRENT_SOURCE_DIR}/SerializationTests/Source/Private/SerializationTests.cpp")
 
     add_library(SerializationTests SHARED "${TEST_SOURCES_CPP}")
-    set_target_properties(SerializationTests PROPERTIES
-            DLL TRUE)
+    set_target_properties(SerializationTests PROPERTIES DLL TRUE)
     add_test(SerializationTests COMMAND SerializationTests)
     target_link_libraries(SerializationTests Serialization)
 
     include_directories(SerializationTests/Source/Public/)
 
 endif(APPLE)
+
+GroupSourcesByFolder(Serialization)
+GroupSourcesByFolder(SerializationTests)

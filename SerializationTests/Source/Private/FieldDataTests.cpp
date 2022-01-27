@@ -1,21 +1,22 @@
 #include "FieldDataTests.h"
-#include "FieldData.h"
-#include "MemoryBuffer.h"
 
-#include "Assert.h"
+#include <cstring>
+
+#include "Test.h"
+#include "FieldData.h"
 
 void ImplFieldDataTests::TestFieldData()
 {
     FieldData<int> fieldData = FieldData<int>("value");
     fieldData.SetValue(10);
-        
-    Assert::AreEqual(10, fieldData.GetValue());
+
+    Test::AreEqual(10, fieldData.GetValue());
     
     fieldData.SetValue(20);
     
-    Assert::AreEqual(20, fieldData.GetValue());
+    Test::AreEqual(20, fieldData.GetValue());
     
-    Assert::AreEqual("value", fieldData.GetName());
+    Test::AreEqual("value", fieldData.GetName());
 }
 
 template<typename TType>
@@ -23,7 +24,7 @@ void TestDataType(TType value)
 {
     FieldData<TType> fieldData = FieldData<TType>("value");
     fieldData.SetValue(value);
-    Assert::AreEqual(value, fieldData.GetValue());
+    Test::AreEqual(value, fieldData.GetValue());
 }
 
 void ImplFieldDataTests::TestFieldDataTypes()
@@ -50,17 +51,17 @@ void ImplFieldDataTests::TestFieldDataString()
     FieldData<const char*> fieldData = FieldData<const char*>("str");
     fieldData.SetValue(str);
     
-    Assert::AreEqual(str, fieldData.GetValue());
-    Assert::AreEqual(sizeof(uint32_t) + strlen(str), fieldData.GetSize());
+    Test::AreEqual(str, fieldData.GetValue());
+    Test::AreEqual(sizeof(uint32_t) + strlen(str), fieldData.GetSize());
     
     str = "B string with B value";
     
     
-    Assert::AreNotEqual(str, fieldData.GetValue());
-    Assert::AreEqual(sizeof(uint32_t) + strlen(str), fieldData.GetSize());
+    Test::AreNotEqual(str, fieldData.GetValue());
+    Test::AreEqual(sizeof(uint32_t) + strlen(str), fieldData.GetSize());
     
     str = "Little string";
     
-    Assert::AreNotEqual(str, fieldData.GetValue());
-    Assert::AreNotEqual(sizeof(uint32_t) + strlen(str), fieldData.GetSize());
+    Test::AreNotEqual(str, fieldData.GetValue());
+    Test::AreNotEqual(sizeof(uint32_t) + strlen(str), fieldData.GetSize());
 }

@@ -1,33 +1,28 @@
 #include "Serializable.h"
 
-template<typename TType>
-void Serializable::AddField(FieldData<TType>* fieldData)
-{
-    list<BaseFieldData*>::iterator endIndex = end(_fields);
-    
-    _fields.insert(endIndex, fieldData);
-}
-
 Serializable::Serializable()
 {
-    _fields = list<BaseFieldData*>();
+    _fields = new std::list<BaseFieldData*>();
 }
 
 Serializable::~Serializable()
 {
-    for (BaseFieldData* element : _fields)
+    if (_fields == nullptr || _fields->size() == 0) return;
+    
+    for (BaseFieldData* element : *_fields)
     {
         delete element;
     }
     
-    _fields.clear();
+    _fields->clear();
+    _fields = nullptr;
 }
 
 uint8_t *Serializable::Serialize() const
 {
     uint8_t* buffer = new uint8_t[GetTotalSizeInBytes()];
     size_t position = 0;
-    for (BaseFieldData* element : _fields)
+    for (BaseFieldData* element : *_fields)
     {
         position = element->PutData(buffer, position);
     }
@@ -37,22 +32,22 @@ uint8_t *Serializable::Serialize() const
 void Serializable::Deserialize(uint8_t *data)
 {
     size_t position = 0;
-    for (BaseFieldData* element : _fields)
+    for (BaseFieldData* element : *_fields)
     {
         position = element->PeekData(data, position);
     }
 }
 
-const list<BaseFieldData*>& Serializable::GetFields() const
+const std::list<BaseFieldData*> Serializable::GetFields() const
 {
-    return _fields;
+    return *_fields;
 }
 
 size_t Serializable::GetTotalSizeInBytes() const
 {
     size_t dataSizeInBytes = 0;
     
-    for (BaseFieldData* field : _fields)
+    for (BaseFieldData* field : *_fields)
     {
         dataSizeInBytes += field->GetSize();
     }
@@ -62,10 +57,10 @@ size_t Serializable::GetTotalSizeInBytes() const
 
 Serializable& Serializable::operator=(const Serializable &other)
 {
-    list<BaseFieldData*>::const_iterator iteratorThis = _fields.begin();
-    list<BaseFieldData*>::const_iterator iteratorOther = other._fields.begin();
+    std::list<BaseFieldData*>::const_iterator iteratorThis = _fields->begin();
+    std::list<BaseFieldData*>::const_iterator iteratorOther = other._fields->begin();
     
-    for (int index = 0; index < _fields.size(); ++index)
+    for (int index = 0; index < _fields->size(); ++index)
     {
         if (index > 0)
         {
@@ -81,9 +76,3 @@ Serializable& Serializable::operator=(const Serializable &other)
     
     return *this;
 }
-
-#define INSTANTIATE_ALL(type) \
-template void Serializable::AddField<type>(FieldData<type>*); \
-template void Serializable::AddField<MemoryBuffer<type>>(FieldData<MemoryBuffer<type>>*);
-
-#include "TemplateInstantiation.hpp"

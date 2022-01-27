@@ -1,8 +1,9 @@
 #include "MemoryBufferTests.h"
 
-#include "Assert.h"
+#include <cstdint>
+
+#include "Test.h"
 #include "MemoryBuffer.h"
-#include <stdint.h>
 
 void ImplMemoryBufferTests::TestMemoryBuffer()
 {
@@ -17,19 +18,19 @@ void ImplMemoryBufferTests::TestMemoryBuffer()
     
     MemoryBuffer<uint8_t> byteArray3(buffer3, 8, false);
     
-    Assert::AreNotEqual(buffer1, const_cast<uint8_t*>(byteArray1.GetBuffer()));
-    Assert::AreNotEqual(buffer2, const_cast<uint8_t*>(byteArray2.GetBuffer()));
-    Assert::AreEqual(buffer3, const_cast<uint8_t*>(byteArray3.GetBuffer()));
+    Test::AreNotEqual(buffer1, const_cast<uint8_t*>(byteArray1.GetBuffer()));
+    Test::AreNotEqual(buffer2, const_cast<uint8_t*>(byteArray2.GetBuffer()));
+    Test::AreEqual(buffer3, const_cast<uint8_t*>(byteArray3.GetBuffer()));
     
     byteArray1 = byteArray2;
-    
-    Assert::AreNotEqual(buffer1, const_cast<uint8_t*>(byteArray1.GetBuffer()));
-    Assert::AreNotEqual(buffer2, const_cast<uint8_t*>(byteArray2.GetBuffer()));
-    Assert::AreEqual(const_cast<uint8_t*>(byteArray1.GetBuffer()), const_cast<uint8_t*>(byteArray2.GetBuffer()));
+
+    Test::AreNotEqual(buffer1, const_cast<uint8_t*>(byteArray1.GetBuffer()));
+    Test::AreNotEqual(buffer2, const_cast<uint8_t*>(byteArray2.GetBuffer()));
+    Test::AreEqual(const_cast<uint8_t*>(byteArray1.GetBuffer()), const_cast<uint8_t*>(byteArray2.GetBuffer()));
     
     MemoryBuffer byteArray4 = byteArray3;
-    
-    Assert::AreEqual(buffer3, const_cast<uint8_t*>(byteArray4.GetBuffer()));
+
+    Test::AreEqual(buffer3, const_cast<uint8_t*>(byteArray4.GetBuffer()));
 }
 
 void ImplMemoryBufferTests::TestMemoryBufferAllocation()
@@ -46,9 +47,9 @@ void ImplMemoryBufferTests::TestMemoryBufferAllocation()
     MemoryBuffer heapCopy1 = byteArrayHeap1;
     MemoryBuffer heapCopy2 = byteArrayHeap2;
     
-    Assert::AreNotEqual(stackBuffer, const_cast<uint8_t*>(stackCopy.GetBuffer()));
-    Assert::AreEqual(heapBuffer1, const_cast<uint8_t*>(heapCopy1.GetBuffer()));
-    Assert::AreNotEqual(heapBuffer2, const_cast<uint8_t*>(heapCopy2.GetBuffer()));
+    Test::AreNotEqual(stackBuffer, const_cast<uint8_t*>(stackCopy.GetBuffer()));
+    Test::AreEqual(heapBuffer1, const_cast<uint8_t*>(heapCopy1.GetBuffer()));
+    Test::AreNotEqual(heapBuffer2, const_cast<uint8_t*>(heapCopy2.GetBuffer()));
     
     delete[] heapBuffer2;
 }
@@ -57,23 +58,23 @@ void ImplMemoryBufferTests::TestMemoryBufferTypes()
 {
     MemoryBuffer<uint16_t> uint16Buffer(new uint16_t[2] { 14, 152 }, 2, false);
     
-    Assert::AreEqual<size_t>(2, uint16Buffer.Length());
-    Assert::AreEqual<size_t>(4, uint16Buffer.Length<uint8_t>());
+    Test::AreEqual<size_t>(2, uint16Buffer.Length());
+    Test::AreEqual<size_t>(4, uint16Buffer.Length<uint8_t>());
     
     MemoryBuffer<uint64_t> uint64Buffer(new uint64_t[2]{ 1512, 9395 }, 2, false);
     
-    Assert::AreEqual<size_t>(2, uint64Buffer.Length());
-    Assert::AreEqual<size_t>(4, uint64Buffer.Length<uint32_t>());
-    Assert::AreEqual<size_t>(8, uint64Buffer.Length<uint16_t>());
-    Assert::AreEqual<size_t>(16, uint64Buffer.Length<uint8_t>());
+    Test::AreEqual<size_t>(2, uint64Buffer.Length());
+    Test::AreEqual<size_t>(4, uint64Buffer.Length<uint32_t>());
+    Test::AreEqual<size_t>(8, uint64Buffer.Length<uint16_t>());
+    Test::AreEqual<size_t>(16, uint64Buffer.Length<uint8_t>());
     
     MemoryBuffer<float> floatBuffer(new float[2]{ 515.124, 3.14 }, 2, false);
     
-    Assert::AreEqual<size_t>(2, floatBuffer.Length());
-    Assert::AreEqual<size_t>(8, floatBuffer.Length<uint8_t>());
+    Test::AreEqual<size_t>(2, floatBuffer.Length());
+    Test::AreEqual<size_t>(8, floatBuffer.Length<uint8_t>());
     
     MemoryBuffer<double> doubleBuffer(new double[2]{ 19835.931859583958, 135.19385399835 }, 2, false);
     
-    Assert::AreEqual<size_t>(2, doubleBuffer.Length());
-    Assert::AreEqual<size_t>(16, doubleBuffer.Length<uint8_t>());
+    Test::AreEqual<size_t>(2, doubleBuffer.Length());
+    Test::AreEqual<size_t>(16, doubleBuffer.Length<uint8_t>());
 }

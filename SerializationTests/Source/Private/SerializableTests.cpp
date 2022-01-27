@@ -1,11 +1,9 @@
 #include "SerializableTests.h"
 
-#include <cstring>
-
-#include "Assert.h"
+#include "Test.h"
 #include "Serializable.h"
 #include "SerializableField.h"
-#include "MemoryBuffer.h"
+#include "FieldData.h"
 
 struct Model : public Serializable
 {
@@ -18,27 +16,31 @@ public:
 void ImplSerializableTests::TestSerializable()
 {
     Model m = Model();
-    Assert::AreEqual(3, (int)m.GetFields().size());
+    Test::AreEqual(3, (int)m.GetFields().size());
 }
 
 void ImplSerializableTests::TestSerializableOrder()
 {
     Model m = Model();
-    const list<BaseFieldData*>& fields = m.GetFields();
-    list<BaseFieldData*>::const_iterator iterator = fields.begin();
-    Assert::AreEqual("a", FieldData<int>::From(*iterator)->GetName());
+    const std::list<BaseFieldData*>& fields = m.GetFields();
+    std::list<BaseFieldData*>::const_iterator iterator = fields.begin();
+    Test::AreEqual("a", FieldData<int>::From(*iterator)->GetName());
     advance(iterator, 1);
-    Assert::AreEqual("b", FieldData<int>::From(*iterator)->GetName());
+    Test::AreEqual("b", FieldData<int>::From(*iterator)->GetName());
     advance(iterator, 1);
-    Assert::AreEqual("c", FieldData<float>::From(*iterator)->GetName());
+    Test::AreEqual("c", FieldData<float>::From(*iterator)->GetName());
 }
 
 void CompareStreams(uint8_t* manuallyGeneratedData, uint8_t* serializedData, size_t totalSize)
 {
+    bool areEqual = true;
+    
     for (int index = 0; index < totalSize; ++index)
     {
-        Assert::AreEqual(*(manuallyGeneratedData + index), *(serializedData + index));
+        areEqual &= *(manuallyGeneratedData + index) == *(serializedData + index);
     }
+
+    Test::IsTrue(areEqual);
 }
 
 void TestSerializeStructSigned(int sign)
@@ -67,7 +69,7 @@ void TestSerializeStructSigned(int sign)
     memcpy(compare + position, &fvalue, sizeof(float));
     position += sizeof(float);
 
-    Assert::AreEqual(position, m.GetTotalSizeInBytes());
+    Test::AreEqual(position, m.GetTotalSizeInBytes());
 
     CompareStreams(compare, serializedData, m.GetTotalSizeInBytes());
     
@@ -94,9 +96,9 @@ void TestDeserializeStructSigned(int sign)
     
     mm.Deserialize(serialized);
     
-    Assert::AreEqual<int>(10 * sign, mm.a);
-    Assert::AreEqual<int>(50 * sign, mm.b);
-    Assert::AreEqual<float>(3.14 * sign, mm.c);
+    Test::AreEqual<int>(10 * sign, mm.a);
+    Test::AreEqual<int>(50 * sign, mm.b);
+    Test::AreEqual<float>(3.14 * sign, mm.c);
 }
 
 void ImplSerializableTests::TestDeserializeStruct()
@@ -123,13 +125,13 @@ void ImplSerializableTests::TestCopyingStructValue()
     m.b = 0;
     m.c = 0.0;
     
-    Assert::AreEqual<int>(0, mm.a);
-    Assert::AreEqual<int>(0, mm.b);
-    Assert::AreEqual<float>(.0, mm.c);
+    Test::AreEqual<int>(0, mm.a);
+    Test::AreEqual<int>(0, mm.b);
+    Test::AreEqual<float>(.0, mm.c);
     
-    Assert::AreEqual<int>(m.a, mm.a);
-    Assert::AreEqual<int>(m.b, mm.b);
-    Assert::AreEqual<float>(m.c, mm.c);
+    Test::AreEqual<int>(m.a, mm.a);
+    Test::AreEqual<int>(m.b, mm.b);
+    Test::AreEqual<float>(m.c, mm.c);
 }
 
 struct Person : public Serializable
@@ -137,7 +139,7 @@ struct Person : public Serializable
 public:
     DECLARE_VAR(uint8_t, age);
     DECLARE_VAR(const char*, name);
-    DECLARE_VAR(string, address);
+    DECLARE_VAR(std::string, address);
 };
 
 void ImplSerializableTests::TestStringSerialization()
@@ -155,7 +157,7 @@ void ImplSerializableTests::TestStringSerialization()
     uint8_t age = 10;
     const char *name = "Anderson Lucas C. Ramos";
     uint32_t nameLen = strlen(name);
-    string address = "Rio de Janeiro";
+    std::string address = "Rio de Janeiro";
     uint32_t addressLen = address.size();
     
     memcpy(manualSerializedPerson, &age, sizeof(uint8_t));
@@ -172,8 +174,8 @@ void ImplSerializableTests::TestStringSerialization()
 
     memcpy(manualSerializedPerson+position, address.c_str(), addressLen);
     position += addressLen;
-    
-    Assert::AreEqual(position, person.GetTotalSizeInBytes());
+
+    Test::AreEqual(position, person.GetTotalSizeInBytes());
     
     CompareStreams(manualSerializedPerson, serializedPerson, person.GetTotalSizeInBytes());
     
@@ -189,16 +191,18 @@ void ImplSerializableTests::TestStringDeserialization()
     person.address = "Rio de Janeiro";
     
     uint8_t* serializedPerson = person.Serialize();
-    
-    Assert::AreEqual<size_t>(46, person.GetTotalSizeInBytes());
+
+    Test::AreEqual<size_t>(46, person.GetTotalSizeInBytes());
     
     Person deserializedPerson;
     
     deserializedPerson.Deserialize(serializedPerson);
     
-    Assert::AreEqual<uint8_t>(person.age, deserializedPerson.age);
-    Assert::AreEqual<const char*>(person.name, deserializedPerson.name);
-    Assert::AreEqual<string>(person.address, deserializedPerson.address);
+    Test::AreEqual<uint8_t>(person.age, deserializedPerson.age);
+    Test::AreEqual<const char*>(person.name, deserializedPerson.name);
+    Test::AreEqual<std::string>(person.address, deserializedPerson.address);
+    
+    delete[] serializedPerson;
 }
 
 struct StreamSerializable : public Serializable
@@ -228,17 +232,42 @@ void ImplSerializableTests::TestMemoryBufferSerialization()
     
     StreamSerializable toDeserialize;
     toDeserialize.Deserialize(serializedStream);
+
+    Test::AreEqual<int>(128, toDeserialize.someInt);
     
-    Assert::AreEqual<int>(128, toDeserialize.someInt);
-    
-    MemoryBuffer<uint8_t> byteArray = toDeserialize.stringAsByteArray.operator MemoryBuffer<uint8_t>();
+    MemoryBuffer<uint8_t> byteArray = toDeserialize.stringAsByteArray;
     
     const uint8_t* deserializedBytes = byteArray.GetBuffer();
     char* deserializedStrContent = new char[byteArray.Length() + 1];
     memset(deserializedStrContent+byteArray.Length(), 0, 1);
     memcpy(deserializedStrContent, deserializedBytes, byteArray.Length());
     
-    Assert::AreEqual(strContent, const_cast<const char*>(deserializedStrContent));
+    Test::AreEqual(strContent, const_cast<const char*>(deserializedStrContent));
     
-    Assert::AreEqual<const char*>(stringForFun, toDeserialize.stringJustForFun);
+    Test::AreEqual<const char*>(stringForFun, toDeserialize.stringJustForFun);
+    
+    delete[] serializedStream;
+}
+
+struct ObjectGraph : public Serializable
+{
+public:
+    DECLARE_VAR(StreamSerializable, streamSerializable)
+    DECLARE_VAR(Person, person)
+};
+
+void ImplSerializableTests::TestObjectGraphSerialization()
+{
+    ObjectGraph graph;
+    StreamSerializable stream = graph.streamSerializable;
+    stream.someInt = 20;
+    stream.stringJustForFun = "String just for fun";
+    
+    uint8_t* serializedGraph = graph.Serialize();
+    
+    ObjectGraph otherGraph;
+    otherGraph.Deserialize(serializedGraph);
+    
+    
+    delete[] serializedGraph;
 }

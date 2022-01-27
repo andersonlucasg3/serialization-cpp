@@ -11,6 +11,7 @@ public:
     static void TestStringSerialization();
     static void TestStringDeserialization();
     static void TestMemoryBufferSerialization();
+    static void TestObjectGraphSerialization();
 };
 
 #define DECLARE_SERIALIZABLE_TESTS() \
@@ -21,4 +22,5 @@ DECLARE_TEST(SerializableTests, TestDeserializeStruct) \
 DECLARE_TEST(SerializableTests, TestCopyingStructValue) \
 DECLARE_TEST(SerializableTests, TestStringSerialization) \
 DECLARE_TEST(SerializableTests, TestStringDeserialization) \
-DECLARE_TEST(SerializableTests, TestMemoryBufferSerialization)
+DECLARE_TEST(SerializableTests, TestMemoryBufferSerialization) \
+DECLARE_TEST(SerializableTests, TestObjectGraphSerialization)

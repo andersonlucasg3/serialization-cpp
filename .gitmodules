@@ -1,0 +1,3 @@
+[submodule "GroupSourcesByFolder"]
+	path = GroupSourcesByFolder
+	url = https://github.com/TheLartians/GroupSourcesByFolder.cmake

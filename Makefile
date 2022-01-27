@@ -12,25 +12,32 @@ endif
 cmake-clean:
 	$(RM_CMAKE_CACHE)
 
-cmake-xcode-gen: cmake-clean
+cmake-xcode-gen:
+	make cmake-clean
 	cmake -G Xcode
 
-cmake-clion-gen: cmake-clean
+cmake-clion-gen:
+	make cmake-clean
 	cmake -G Ninja
 
-cmake-vs-gen: cmake-clean
+cmake-vs-gen:
+	make cmake-clean
 	cmake -G "Visual Studio 17 2022"
 
-build-mac: cmake-xcode-gen
+build-mac:
+	make cmake-xcode-gen
 	xcodebuild -project ${XCODE_PROJECT} -scheme ${SCHEME} build
 	make cmake-clion-gen
 
-test-mac: cmake-xcode-gen
+test-mac:
+	make cmake-xcode-gen
 	xcodebuild -project ${XCODE_PROJECT} -scheme ${TEST_SCHEME} test
 	make cmake-clion-gen
 
-xcode-open: cmake-xcode-gen
+xcode-open:
+	make cmake-xcode-gen
 	open ./*.xcodeproj
 
-vs-open: cmake-vs-gen
+vs-open:
+	make cmake-vs-gen
 	powershell -c "start ${VS_SOLUTION}"
